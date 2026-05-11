@@ -51,12 +51,19 @@
 		</classes>
 	</test-->
 	
-	<test name="Accounts Bank Payment Test">
+	<!--test name="Journal Voucher Mulitiline Test">
 		<classes>
 			<class
-				name="Test.accountsTest.masterTests.BankPaymentTest"></class>
+				name="Test.accountsTest.masterTests.JournalVoucherMultiLineTest"></class>
 		</classes>
-	</test>
+	</test-->
+	
+	<!--test name="Credit Note Multiline Test">
+		<classes>
+			<class
+				name="Test.accountsTest.masterTests.CreditNoteMultilineTest"></class>
+		</classes>
+	</test-->
 
 </suite>
 

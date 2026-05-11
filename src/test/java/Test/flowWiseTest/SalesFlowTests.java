@@ -44,7 +44,7 @@ public class SalesFlowTests extends SetUp{
 		    }
 
 		    
-		    //,dependsOnMethods = "createSaleOrder"
+		     //,dependsOnMethods = "createSaleOrder"
 		     //Flow to execute Sale Dispatch Flow.
 		    @Test(groups = "sales-flow",priority=1 )
 		    public void createSaleDispatch() {
@@ -65,10 +65,7 @@ public class SalesFlowTests extends SetUp{
 		    	taxInvFlow.prepareEnvToDirectlyOpenSDForm();
 		    	taxInvFlow.createTaxInvoice(dispatchNo);	    	
 		    }
-		
-
-
-	
+			
 }
 	
 

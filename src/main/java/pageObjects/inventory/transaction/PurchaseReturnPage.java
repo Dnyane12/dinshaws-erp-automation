@@ -39,7 +39,7 @@ public class PurchaseReturnPage {
 		
 		
 
-		@FindBy(xpath="(//label[contains(normalize-space(text()),'GRN No')]/following::input[@class='igx-input-group__input'])[3]")
+		@FindBy(xpath="(//label[contains(normalize-space(text()),'GRN No')]/following::input[@role='combobox'])[4]")
 		private WebElement grnNoDrop;
 		
 		@FindBy(xpath="//div[@role='listbox']//igx-display-container[contains(@class,'igx-display-container')]")

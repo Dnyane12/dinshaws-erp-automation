@@ -6,7 +6,7 @@
 	<listener class-name="utils.TestListener"/> 
 	</listeners>
 
-	<!-- test name="Sales Flow Only">
+	<test name="Sales Flow Only">
 		<groups>
 			<run>
 				<include name="sales-flow" />
@@ -15,10 +15,10 @@
 		<classes>
 			<class name="Test.flowWiseTest.SalesFlowTests" />
 		</classes>
-	</test-->
+	</test>
 
 
-	<!-- test name="Inventory Flow Only"> <groups> <run> <include name="Inventory-flow"/> 
+	<!--test name="Inventory Flow Only"> <groups> <run> <include name="Inventory-flow"/> 
 		</run> 
 		</groups> 
 		<classes> 

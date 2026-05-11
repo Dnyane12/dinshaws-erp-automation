@@ -43,14 +43,14 @@ public class InventoryFlowTests extends SetUp{
 		String poNo;
 		String grnNo;
 		String voucherNo;
-		//LoginFlow loginFlow;
-		//HomeFlow homeFlow;
+
 		private static Logger logger =LogManager.getLogger(InventoryFlowTests.class);
 			
 		@BeforeClass(groups = "Inventory-flow")
 		public void compInvFlow(){
 			System.out.println("called compInvFlow() ,@Before class method.");
-			System.out.println("driver: "+driver);			poFlow = new PurchaseOrderFlow(driver);		
+			System.out.println("driver: "+driver);			
+			poFlow = new PurchaseOrderFlow(driver);		
 			grnFlow= new GoodReceiptNoteFlow(driver);		
 			grnPostFlow = new GRNPostingFlow(driver);
 			vpRepFlow = new VoucherPrintingRepFlow(driver);
@@ -59,13 +59,6 @@ public class InventoryFlowTests extends SetUp{
 			grnRepFlow= new GRNPrintingFlow(driver);
 			poRepFlow= new POPrintingRepFlow(driver);
 			grnPage = new GoodReceiptNotePage(driver);
-			
-			
-			//loginFlow = new LoginFlow(driver);
-			//homeFlow = new HomeFlow(driver);
-			//loginFlow.loginFlowCheck();
-			//WaitHelper.waitForInvisibilityOfElementLocated(driver, grnPage.getDotSpinner(), 10);
-			//homeFlow.clickInvModAndStoreLink();
 		}
 		
 		

@@ -10,6 +10,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
+import utils.CommonUtilForDropdown;
 import utils.DBUtilityForRoutePartyMapping;
 import utils.PropertyReader;
 import utils.WaitHelper;
@@ -56,7 +58,7 @@ public class MultiSaleOrderPage{
 	@FindBy(xpath="(//label[normalize-space(text())='Status']/following::igx-icon[contains(@class,'material-icons') and contains(.,'expand_more')])[1]")
 	private WebElement orderStatusDropIcon;
 	@FindBy(xpath="(//div[contains(@class,'igx-input-group__bundle-main')]//input[contains(@class,'igx-input-group__input')])[8]")
-	private WebElement orderStatusDropInput;
+	private WebElement orderStatusDropField;
 	@FindBy(xpath="//app-g-btn-all-button[contains(@class,'ml-4px')]//button[normalize-space(text())='Submit' and @id='l_action_save_btn-width-selector']")
 	private WebElement submitButtton;	
 	By routeSearchBox = By.xpath("(//label[normalize-space(text())='Route']/following::input[contains(@class,'igx-input-group__input')])[1]");
@@ -114,7 +116,9 @@ public class MultiSaleOrderPage{
 	private WebElement topScroller;
 	@FindBy(xpath="//igx-grid-row[@data-rowindex='0']//input[contains(@class,'grid-input-custom')]")
 	private WebElement hiddenItemInputs;
+	
 	By partyCodeList= By.xpath("//div[contains(@class,'igx-overlay__content')]//igx-combo-item[@role='option']//span[contains(@class,'combo-col')][1]");
+	
 	
 	
 	
@@ -170,20 +174,12 @@ public class MultiSaleOrderPage{
 	
 	
 	
-	public void selectPartyDropdown(String partyDropOpt) {
-		WaitHelper.waitForClickable(driver,partyDropField, 10).click();
-		WaitHelper.waitForPresenceOfElementLocated(driver, partyDropField, 10).clear();
-		WaitHelper.waitForPresenceOfElementLocated(driver, partyDropField, 10).sendKeys(partyDropOpt);
-
-		WaitHelper.waitForClickable(driver, partyOptPop, 10).click();
-	
-		
-		//UtilityDuplicate.selectFromComboWithoutSearch(driver, , partyDLabel, partyDropOpt);
-		//UtilityDuplicate.selectFromComboWithoutSearch(driver, partyDLabel, partyDropOpt);
+	public void selectPartyDropdown(String partyDropOpt) {	
+		WebElement partyField= driver.findElement(partyDropField);
+		CommonUtilForDropdown.selectFromIgxDropdown(driver, partyField, partyDropOpt);
 	}
 	
 	public void clickGetOrderBtn() {
-		 WaitHelper.waitForClickable(driver, getOrderButton, 10);
 		 getOrderButton.click();
 	}
 	
@@ -210,11 +206,9 @@ public class MultiSaleOrderPage{
 		quickSaveButton.click();
 	}
 	
-	public void selectStatusOpt(String statusLabel,String statusOpt) {
-		WaitHelper.waitForClickable(driver, orderStatusDropIcon, 10);
-		orderStatusDropInput.clear();
-		//UtilityDuplicate.selectFromComboWithoutSearch(driver, , statusLabel, statusOpt);
-		WaitUtilityDuplicate.selectFromComboWithoutSearch(driver, statusLabel, statusOpt);
+	public void selectStatusOpt(String statusOpt) {
+		orderStatusDropField.clear();
+		CommonUtilForDropdown.selectFromIgxDropdown(driver, orderStatusDropField, statusOpt);
 	}
 
 	
@@ -222,8 +216,7 @@ public class MultiSaleOrderPage{
 		WaitHelper.waitForClickable(driver, submitButtton, 10);
 		submitButtton.click();
 		
-		//WaitHelper.ForInvisibilityOfElementLocated(driver, dotSpinner, 5);
-		WaitHelper.waitForVisible(driver, submitConfPopup, 10);	
+//		WaitHelper.waitForVisible(driver, submitConfPopup, 10);	
 		WaitHelper.waitForClickable(driver, conOkButton, 10);
 		conOkButton.click();
 	}
@@ -241,6 +234,13 @@ public class MultiSaleOrderPage{
 		return succMsgDisplayStatus;	
 	}
 	
+	public String getSuccessMsgText() {
+		WaitHelper.waitForVisible(driver, successMsg, 10);
+		String successMsgText = successMsg.getText();
+		System.out.println("Success message text: " + successMsgText);
+		return successMsgText;	
+	}
+		
 	
 	//to check that only active parties are found observed in party drop list of multi sale order.
 	public boolean checkActiveStatus() {
@@ -326,18 +326,18 @@ public class MultiSaleOrderPage{
 	
 	
 	public String selectRoute(String routeValue) {
-		WaitHelper.waitForInvisibilityOfElementLocated(driver, dotSpinner, 20);
-		
 		WebElement routeField =driver.findElement(routeSearchBox);
-		routeField.click();
-		routeField.clear();
-		routeField.sendKeys(routeValue);
-		
-		WaitHelper.waitForClickable(driver, routeOptionPopup,10);
-		driver.findElement(routeOptionPopup).click();
-		
+		CommonUtilForDropdown.selectFromIgxDropdown(driver, routeField, routeValue);
 		String uiSelectedRoute =driver.findElement(routeSearchBox).getAttribute("value");
-		return uiSelectedRoute;
+		
+//		routeField.click();
+//		routeField.sendKeys(routeValue);
+//		
+//		WaitHelper.waitForClickable(driver, routeOptionPopup,10);
+//		driver.findElement(routeOptionPopup).click();
+//		
+//		String uiSelectedRoute =driver.findElement(routeSearchBox).getAttribute("value");
+     	return uiSelectedRoute;				
 	}
 	
 	
@@ -522,8 +522,8 @@ public class MultiSaleOrderPage{
 		return orderStatusDropIcon;
 	}
 
-	public WebElement getOrderStatusDropInput() {
-		return orderStatusDropInput;
+	public WebElement getOrderStatusDropField() {
+		return orderStatusDropField;
 	}
 
 	public WebElement getSubmitButtton() {

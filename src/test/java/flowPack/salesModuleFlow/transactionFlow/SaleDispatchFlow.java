@@ -44,8 +44,7 @@ public SaleDispatchFlow(WebDriver driver) {
 
 public void prapareEnvToDirectlyOpenSDForm() {
 	try {
-	logger.info("ing for sale dispatch Link to be clickable and then clicking it");
-	WaitHelper.waitForClickable(driver, saledisPage.getSaleDispatchLink(), 10);
+	logger.info("ing for sale dispatch Link to be clickable and then clicking it");	
 	saledisPage.clickSaleDisLinkAfterSaleDisp();
 	
 	logger.info("ing for route to be clickable and then selecting it");					
@@ -65,14 +64,11 @@ public void prapareEnvToDirectlyOpenSDForm() {
 		logger.info("calling loggingFlowCheck method of loginFlow");
 		loginFlow.loginFlowCheck();
 		
-		WaitHelper.waitForClickable(driver, saledisPage.getSalesModuleLink(), 10);
 		saledisPage.clickSalesModule();
-		
-		WaitHelper.waitForClickable(driver, saledisPage.getTransactionLink(), 10);
+	
 		saledisPage.clickTransactionLink();	
 
 		logger.info("ing for sale dispatch Link to be clickable and then clicking it");
-		WaitHelper.waitForClickable(driver, saledisPage.getSaleDispatchLink(), 10);
 		saledisPage.clickSaleDispatchLink();
 		
 		
@@ -84,8 +80,7 @@ public void prapareEnvToDirectlyOpenSDForm() {
 			//saledisPage.selectLocation(propReader.getProperty("locationLabel"), propReader.getProperty("locationOpt"));
 		}
 		
-			logger.info("ing for route to be clickable and then selecting it");				
-			WaitHelper.waitForInvisibilityOfElementLocated(driver, saledisPage.getDotSpinner(), 10);				
+			logger.info("ing for route to be clickable and then selecting it");								
 			saledisPage.selectRoute(propReader.getProperty("routeOpt"));
 						
 			String deliveryDateSelected= saledisPage.getDeliveryDateSelected();
@@ -136,8 +131,10 @@ public void prapareEnvToDirectlyOpenSDForm() {
 		WaitHelper.waitForClickable(driver, saledisPage.getCheckRecd(), 10);
 		saledisPage.selectCheckbox();
 		
-		WaitHelper.waitForClickable(driver, saledisPage.getCreateSaleDispatchBtn(), 10);
 		saledisPage.clickCreateSaleDispatchBtn();	
+		
+		saledisPage.extractSaleOrderNoFromGrid();
+		
 		WaitHelper.waitForInvisibilityOfElementLocated(driver, saledisPage.getDotSpinner(), 10);
 		saledisPage.clickSubmitButton();
 
@@ -149,9 +146,7 @@ public void prapareEnvToDirectlyOpenSDForm() {
 	    	System.out.println("deleteRecord: "+deleteRecord);
 	    	
 	    	if(deleteRecord.equals("Yes")) {
-	    		WaitHelper.waitForClickable(driver, saledisPage.getDeleteSymbol(), 10);
 	    		saledisPage.deleteRecord();	
-	    		WaitHelper.waitForClickable(driver, saledisPage.getSubmitButton(), 10);
 	    		saledisPage.clickSubmitButton1();	    		
 	    	}	    		
 	     }		

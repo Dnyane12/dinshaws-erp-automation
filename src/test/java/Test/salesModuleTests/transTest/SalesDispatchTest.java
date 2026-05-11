@@ -64,7 +64,8 @@ public class SalesDispatchTest extends SetUp {
 			String expectedMsg="Sale Dispatch created successfully";
           	
 			System.out.println("actuSuccMsg: "+actuSuccMsg+","+"expectedErrMsg: "+expectedMsg+","+"dispatchNo: "+dispatchNo);
-			softAssert.assertTrue(actuSuccMsg.startsWith(expectedMsg),"dispalyed Success message mismatch!");			
+			softAssert.assertTrue(actuSuccMsg.startsWith(expectedMsg),"dispalyed Success message mismatch!");
+			softAssert.assertAll();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

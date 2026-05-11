@@ -10,6 +10,7 @@ import org.testng.annotations.Test;
 import flowPack.setUpFlow.HomeFlow;
 import flowPack.setUpFlow.LoginFlow;
 import pageObjects.sales.transaction.TaxInvoicePage;
+import utils.CommonUtilForDropdown;
 import utils.PropertyReader;
 import utils.WaitHelper;
 
@@ -35,7 +36,6 @@ public class TaxInvoiceFlow {
 	public void prepareEnvToDirectlyOpenSDForm() {
 		try {			
 			logger.info("clicking TaxInvoiceLink");
-			WaitHelper.waitForClickable(driver, taxInvPage.getTaxInvoiceLink(), 10);
 			taxInvPage.clickTaxInvoiceLink();
 			
 		} catch (Exception e) {
@@ -50,7 +50,6 @@ public class TaxInvoiceFlow {
 			homeFlow.clickToSalesModule1();
 			
 			logger.info("clicking TaxInvoiceLink");
-			WaitHelper.waitForClickable(driver, taxInvPage.getTaxInvoiceLink(), 10);
 			taxInvPage.clickTaxInvoiceLink();
 			
 		} catch (Exception e) {
@@ -74,12 +73,10 @@ public class TaxInvoiceFlow {
 		WaitHelper.waitForInvisibilityOfElementLocated(driver, taxInvPage.getDotSpinner(), 10);
 		
 		logger.info("ing and selecting sale dispatch number from drop list");
-		WaitHelper.waitForClickable(driver, taxInvPage.getDispatchDrop(), 10);
-		taxInvPage.searchAndSelectDispatchNo(propReader.getProperty("dispatchNoLabel"),dispatchNo);
+		CommonUtilForDropdown.selectFromIgxDropdown(driver, taxInvPage.getDispatchDrop(), dispatchNo);
 		
-		
+
 		logger.info("clicking GenerateTaxInvBtn");
-		WaitHelper.waitForInvisibilityOfElementLocated(driver, taxInvPage.getDotSpinner(), 10);
 		WaitHelper.waitForClickable(driver, taxInvPage.getGenerateTaxInvBtn(), 20);
 		taxInvPage.clickGenerateTaxInvoiceButton();
 		

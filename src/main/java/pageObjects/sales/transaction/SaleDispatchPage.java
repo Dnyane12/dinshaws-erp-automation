@@ -114,6 +114,8 @@ public class SaleDispatchPage {
 	@FindBy(xpath=".//div[contains(normalize-space(text()),'𝐅𝐑𝐄𝐄')]")
 	private List<WebElement> freeItemRow;
 	
+	@FindBy(xpath="(//igx-display-container//igx-grid-row//igx-grid-cell[contains(@id,'l_despatch_silected_saleorder_igx_grid')])[1]")
+	private WebElement saleOrderNoRowField;
 	
 	
 	
@@ -156,7 +158,7 @@ public class SaleDispatchPage {
 	
 	
 	public void clickTransactionLink() {
-		WaitHelper.waitForVisible(driver, transactionLink, 10);
+		WaitHelper.waitForClickable(driver, transactionLink, 10);
 		transactionLink.click();
 	}
 		
@@ -170,16 +172,12 @@ public class SaleDispatchPage {
 
 	
 	public void clickSaleDispatchLink() {
-		WaitHelper.waitForVisible(driver, saleDispatchLink, 10);
+		WaitHelper.waitForClickable(driver, saleDispatchLink, 10);
 		saleDispatchLink.click();
-		//WaitHelper.ForClickable(driver, confirmPopup, 10);
-		//WaitHelper.ForClickable(driver, okBtn, 10);
-		//okBtn.click();
 	}
 	
 
-	public void clickSaleDisLinkAfterSaleDisp() {
-		WaitHelper.waitForInvisibilityOfElementLocated(driver, dotSpinner, 10);
+	public void clickSaleDisLinkAfterSaleDisp() {	
 		WaitHelper.waitForClickable(driver, saleDispatchLink, 10);
 		saleDispatchLink.click();
 		WaitHelper.waitForVisible(driver, confirmPopup, 10);
@@ -211,31 +209,23 @@ public class SaleDispatchPage {
 	}
 
 	public void selectRoute(String routeOpt) {
-		WaitHelper.waitForInvisibilityOfElementLocated(driver, dotSpinner, 25);
+		WaitHelper.waitForInvisibilityOfElementLocated(driver, dotSpinner, 10);
 		WaitHelper.waitForRefreshAndClick(driver, route, 10);
 		driver.findElement(route).sendKeys(routeOpt);
 				
-		WaitHelper.waitForClickable(driver, routeOptPopup, 10);
-		driver.findElement(routeOptPopup).click();
+		WaitHelper.waitForClickable(driver, routeOptPopup, 10).click();
 		//SimpleDropUtil.selectDropOption(driver,route,routeOptPopup,routeOpt);
 	}
 
 	
-//	public void selectRoute(String routeOpt) {
-//
-//
-//	    WebElement routeInput =
-//	            WaitHelper.waitForClickable(driver, route, 10);
-//
-//	    // Type value
-//	    routeInput.sendKeys(routeOpt);
-//
-//	    // 🔑 Open dropdown
-//	    routeInput.sendKeys(Keys.ARROW_DOWN);
-//
-//	    // 🔑 Select option
-//	    routeInput.sendKeys(Keys.ENTER);
-//	}
+	public String extractSaleOrderNoFromGrid() {
+		WaitHelper.waitForVisible(driver, saleOrderNoRowField, 10);
+		String saleOrderNo= saleOrderNoRowField.getText().trim();
+		System.out.println("saleOrderNo:"+saleOrderNo);
+		return saleOrderNo;
+	}
+
+
 
 
 	
@@ -299,8 +289,7 @@ public class SaleDispatchPage {
 	 
 		
 	public void selectCheckbox() {
-		logger.info("Selecting record to dispatch using checkbox");
-		 WaitHelper.waitForClickable(driver, checkRecd, 10);	  
+		logger.info("Selecting record to dispatch using checkbox");	  
 		 checkRecd.click();		
 	}
 	
@@ -381,7 +370,6 @@ public class SaleDispatchPage {
 			WaitHelper.waitForClickable(driver, submitButton, 10);
 			submitButton.click();
 			
-			WaitHelper.waitForVisible(driver, confirmPopup, 10);
 			WaitHelper.waitForClickable(driver, okBtn, 10);
 			okBtn.click();			
         }	

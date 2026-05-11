@@ -1,95 +1,86 @@
 package Test.setUpTests;
 
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import utils.DriverProvider;
 import utils.PropertyReader;
 
-public class SetUp implements DriverProvider{
+public class SetUp implements DriverProvider {
 
     public static WebDriver driver;
     public static PropertyReader prop;
+
     private static final Logger logger = LogManager.getLogger(SetUp.class);
-    public static boolean isDriverInitialized = false;
 
     @Override
-	public WebDriver getDriver() {
-		return driver;
-	}
-    
-    
+    public WebDriver getDriver() {
+        return driver;
+    }
+
     @BeforeClass(alwaysRun = true)
     public void basicSetting() {
-    	try {
-    		logger.info("calling basicSetting(),@BeforeClass in SetUp class");
-    		prop = new PropertyReader("InventoryModule/application.properties");
-    		System.out.println("prop:"+prop);
-    	
-    	if(!isDriverInitialized) {
-    	 String browserName = prop.getProperty("browser");
-    	 System.out.println("browserName:"+browserName);
-    	 //using debug type of logger level to debug the browser name.
-    	 logger.debug("Browser name from property file :"+browserName);
-    	
-    	
-    	 
-    			switch(browserName.toLowerCase()) {
-    			case "chrome":
-    				System.setProperty("webdriver.chrome.driver", "C:\\ChromeDriver\\chromedriver-win64\\chromedriver.exe");
-    				driver= new ChromeDriver();
-    				//using debug type of logger level to debug the driver initilized properly or not.
-    				logger.debug("WebDriver has been Innitilised with driver of type :"+driver);
-    				System.out.println("chrome driver properly initilised");
-    				break;			
-    			case "firefox":
-    				System.setProperty("webdriver.firefox.driver", "");
-    				driver= new FirefoxDriver();
-    				logger.info("WebDriver has been Innitilised with driver of type :"+driver);
-    			    break;
-    			case "eage":
-    				System.setProperty("webdriver.edge.driver", "");
-    		         driver= new EdgeDriver();
-    		         logger.info("WebDriver has been Innitilised with driver of type :"+driver);
-    		         break;		         
-    			default: 
-    				System.out.println("Invalide browser!,cant login");
-    				//using warn ,logger level to provide warning message.
-    				logger.warn("Invalid browser name,execution can not be continue !"+browserName);
-    				//using fatal,logger level to provide the high level fatal issue.
-    				logger.fatal("Execution stoped due to unsupported browser.");
-    				return;					
-    	         }				
-    		// Wait = new WebDriverWait(driver,Duration.ofSeconds(20));
-    			isDriverInitialized =true;
-             }
-    		}catch(Exception e) {
-    			e.printStackTrace();
-    		}
-    	}
 
-	
+        logger.info("Starting Test Execution");
 
-  
+        prop = new PropertyReader("SetUp/application.properties");
 
-//    @AfterClass(alwaysRun = true)
-//    public void tearDown() {
-//        if (driver != null) {
-//            logger.info("Closing browser and quitting driver");
-//            driver.quit();
-//            isDriverInitialized = false;
-//        }
-//    }
+        String browser = prop.getProperty("browser").trim().toLowerCase();
+        String url = prop.getProperty("url").trim();
+
+        driver = launchBrowser(browser);
+
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.manage().deleteAllCookies();
+
+        driver.get(url);
+
+        logger.info("Application opened successfully");
+    }
+
+    public WebDriver launchBrowser(String browser) {
+
+        switch (browser) {
+
+        case "chrome":
+            WebDriverManager.chromedriver().setup();
+            logger.info("Launching Chrome Browser");
+            return new ChromeDriver();
+
+        case "firefox":
+            WebDriverManager.firefoxdriver().setup();
+            logger.info("Launching Firefox Browser");
+            return new FirefoxDriver();
+
+        case "edge":
+            WebDriverManager.edgedriver().setup();
+            logger.info("Launching Edge Browser");
+            return new EdgeDriver();
+
+        default:
+            logger.error("Invalid Browser Name: " + browser);
+            throw new RuntimeException("Browser not supported");
+        }
+    }
+
+    @AfterClass(alwaysRun = true)
+    public void tearDown() {
+
+        if (driver != null) {
+            logger.info("Closing Browser");
+            driver.quit();
+        }
+    }
 }

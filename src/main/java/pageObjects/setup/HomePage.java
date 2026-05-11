@@ -25,7 +25,7 @@ public class HomePage {
 		PageFactory.initElements(driver, this);
 	}
 
-	@FindBy(xpath = "//h3[contains(@class,'custom-font fs-17') and normalize-space(text())='Inventory']")
+	@FindBy(xpath = "//igx-card//h3[normalize-space(text())='Inventory']")
 	private WebElement inventoryMod;
 
 	@FindBy(xpath = "(//span[contains(@class,'fs-12')]//b)[2]")
@@ -34,27 +34,27 @@ public class HomePage {
 	@FindBy(xpath = "//div[contains(@class,'p-1')]")
 	private WebElement entChangeSection;
 	
-	By dotSpinner =By.xpath("/html/body/app-root/div/div/div/div/div");
+	By dotSpinner =By.xpath("//div[@class='dot-spinner']");
 
 	@FindBy(xpath = "//div[contains(@class,'fs-12 ') and normalize-space(text())='Dairy Plant UAT']")
 	private WebElement dairyPlantEnt;
 
 	// locating sales Module
-	@FindBy(xpath = "//h3[normalize-space(text())='Sales']")
-	private WebElement salesModuleLink;
+	By salesModuleLink = By.xpath("//igx-card[contains(@id,'igx-card')]//h3[normalize-space(text())='Sales']");
+	
 
 	// Locating config Master
 	@FindBy(xpath = "(//span[contains(normalize-space(.), 'Configure Master') and contains(@class,'fs-13')])[1]")
 	private WebElement configMasterLink;
 
-	By storeLink= By.xpath("(//span[contains(@class,'fs-13') and normalize-space(text())='Stores'])[1]");
+	By storeLink= By.xpath("(//app-menu-tree//span[normalize-space(text())='Stores'])[1]");
 	
-	@FindBy(xpath="(//span[normalize-space(text())='Transaction' and contains(@class,'fs-13')])[1]")
+	@FindBy(xpath="(//app-menu-tree//span[normalize-space(text())='Transaction' and contains(@class,'fs-13')])[1]")
 	private WebElement transactionLink;
 	
 	@FindBy(xpath="//span[contains(text(),'Multi-Sale Order (New)') and contains(@class,'fs-12')]")
 	private WebElement multiSaleOrderLink;
-	By transactionLink1 = By.xpath("(//span[normalize-space(text())='Transaction' and contains(@class,'fs-13')])[1]");
+	By transactionLink1 = By.xpath("(//app-menu-tree//span[normalize-space(text())='Transaction' and contains(@class,'fs-13')])[1]");
 	
 	@FindBy(xpath="//igx-card[contains(@id,'igx-card')]/following::h3[contains(text(),'Accounts')]")
 	private WebElement accountModLink;
@@ -83,7 +83,6 @@ public class HomePage {
 	
 	public void clickInventoryModule() {
 		logger.info("clicking inventoryMod  in HomePage");
-		WaitHelper.waitForInvisibilityOfElementLocated(driver, dotSpinner, 10);
 		WaitHelper.waitForClickable(driver, inventoryMod, 10);
 		inventoryMod.click();
 	}
@@ -94,16 +93,13 @@ public class HomePage {
 	}
 
 	
-	public void clickSalesModule() {
-		logger.info("ing for sales module link and clicking");		
-		WaitHelper.waitForClickable(driver, salesModuleLink, 10);
-		salesModuleLink.click();
+	public void clickSalesModule() {		
+		WaitHelper.waitForRefreshAndClick1(driver, salesModuleLink, 10);
 		logger.info("done clicking salesModuleLink");
 	}
 
 	public void clickTransLink() {
-		WaitHelper.waitForClickable(driver, transactionLink, 10);
-		transactionLink.click();
+		WaitHelper.waitForRefreshAndClick(driver, transactionLink1, 10);
 	}
 	
 
@@ -125,7 +121,7 @@ public class HomePage {
 		return dairyPlantEnt;
 	}
 
-	public WebElement getSalesModuleLink() {
+	public By getSalesModuleLink() {
 		return salesModuleLink;
 	}
 

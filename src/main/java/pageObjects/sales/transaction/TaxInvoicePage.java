@@ -92,19 +92,16 @@ public void clickTaxInvoiceLink(){
 }
 
 public void searchAndSelectDispatchNo(String dispatchNoLabel,String dispatchNoOption) {
-    WaitHelper.waitForClickable(driver, dispatchNo, 10);
 	WaitUtilityDuplicate.selectFromComboWithoutSearch(driver,dispatchNoLabel, dispatchNoOption);
 }
 
 public void clickGenerateTaxInvoiceButton() {
-	WaitHelper.waitForClickable(driver, generateTaxInvBtn, 10);
 	generateTaxInvBtn.click();
-	WaitHelper.waitForInvisibilityOfElementLocated(driver, dotSpinner, 0);
+	WaitHelper.waitForInvisibilityOfElementLocated(driver, dotSpinner, 10);
 }
 
 
 public void clickSubmitButton() {
-	WaitHelper.waitForClickable(driver, submitBtn, 10);
 	submitBtn.click();
 }
     

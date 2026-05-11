@@ -71,9 +71,16 @@ public class MultiSaleOrderTest extends SetUp {
 	public void validateMultiSaleOrderCReation() {
 		try {
 			saleOFlow.createMultiSaleOrder();
+			
 			boolean suMsgDisStatus = saleObj.succMsgDisplayStatus();
 			System.out.println(" multi sale order suMsgDisStatus:" + suMsgDisStatus);
+			
+			String expMsg= "Sale OrderSave successfully";
+			String actSuccMsg= saleObj.getSuccessMsgText();
+			
 			softAssert.assertTrue(suMsgDisStatus, "Multi sale order Success message not displayed!");
+			softAssert.assertEquals(actSuccMsg, expMsg, "Success message text mismatch after creating multi sale order!");
+			softAssert.assertAll();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

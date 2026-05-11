@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <suite name="Dinshaws Sanity Test Suite" parallel="none" verbose="2">
-<test name="Sales Flow Only">
+<!--test name="Sales Flow Only">
         <groups>
             <run>
                 <include name="sales-flow"/>
@@ -9,7 +9,7 @@
         <classes>                                                                      
             <class name="Test.flowWiseTest.SalesFlowTests"/>          
         </classes>
-    </test>
+    </test-->
     
     
      <!--test name="Inventory Flow Only">

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Failed suite [Full System Suite]">
-  <test thread-count="5" name="Accounts Bank Payment Test(failed)">
+  <test thread-count="5" name="Credit Note Multiline Test(failed)">
     <classes>
-      <class name="Test.accountsTest.masterTests.BankPaymentTest">
+      <class name="Test.accountsTest.masterTests.CreditNoteMultilineTest">
         <methods>
+          <include name="validateCreditNoteMlCeation"/>
           <include name="basicSetting"/>
-          <include name="bankPaymentcreateVali"/>
           <include name="objInit"/>
         </methods>
-      </class> <!-- Test.accountsTest.masterTests.BankPaymentTest -->
+      </class> <!-- Test.accountsTest.masterTests.CreditNoteMultilineTest -->
     </classes>
-  </test> <!-- Accounts Bank Payment Test(failed) -->
+  </test> <!-- Credit Note Multiline Test(failed) -->
 </suite> <!-- Failed suite [Full System Suite] -->

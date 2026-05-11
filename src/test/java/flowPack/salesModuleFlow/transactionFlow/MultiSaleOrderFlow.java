@@ -46,13 +46,10 @@ public MultiSaleOrderFlow(WebDriver driver) {
 
 public void prepareEnvironment() {
 	try {				 
-		loginFlow.loginFlowCheck();
-		WaitHelper.waitForInvisibilityOfElementLocated(driver, saleObj.getDotSpinner(), 10);
+		loginFlow.loginFlowCheck();		
 		homeFlow.clickToSalesModule1();
-		
-		WaitHelper.waitForClickable(driver, saleObj.getMultiSaleOrderLink(), 10);				
+				
 		saleObj.clickMultiSaleLink();
-		WaitHelper.waitForInvisibilityOfElementLocated(driver, saleObj.getDotSpinner(), 10);
 	} catch (InterruptedException e) {
 		e.printStackTrace();
 	}
@@ -65,33 +62,30 @@ public void prepareEnvironment() {
 		try {
 		WaitHelper.waitForInvisibilityOfElementLocated(driver, saleObj.getDotSpinner(), 10);	
 		
-		WaitHelper.waitForClickable(driver, saleObj.getRouteSearchbox(), 10);
 		saleObj.selectRoute(propReader.getProperty("routeDropOpt").trim());
 				
-		WaitHelper.waitForInvisibilityOfElementLocated(driver, saleObj.getDotSpinner(),10);
-		WaitHelper.waitForClickable(driver, saleObj.getPartyDropField(), 10);
 		saleObj.selectPartyDropdown(propReader.getProperty("partyDropOpt").trim());	
 					
 		WaitHelper.waitForClickable(driver, saleObj.getGetOrderButton(), 10);			
 		saleObj.clickGetOrderBtn();	
 			
-		//WaitHelper.ForClickable(driver, saleObj.getSv500Input(), 10);
-		//saleObj.enterSv500Input();
+		saleObj.enterSv500Input();
 		
 		//WaitHelper.ForClickable(driver, saleObj.getAhar500Input(), 10);
 		//saleObj.enterAhar500Input();
 		
-		WaitHelper.waitForInvisibilityOfElementLocated(driver, saleObj.getDotSpinner(),10);
-		WaitHelper.waitForClickable(driver, saleObj.getAhar2L(), 10);
-		saleObj.enterAhar2L();
+		//WaitHelper.waitForInvisibilityOfElementLocated(driver, saleObj.getDotSpinner(),10);
+		//WaitHelper.waitForClickable(driver, saleObj.getAhar2L(), 10);
+		//saleObj.enterAhar2L();
 		
 		
 		WaitHelper.waitForClickable(driver, saleObj.getOrderStatusDropIcon(), 10);
-		saleObj.selectStatusOpt(propReader.getProperty("statusLabel"), propReader.getProperty("statusOpt"));
+		saleObj.selectStatusOpt(propReader.getProperty("statusOpt"));
 		
 		WaitHelper.waitForClickable(driver, saleObj.getSubmitButtton(), 10);
 		saleObj.clickSubmitButton();
 		
+		saleObj.getSuccessMsgText();
 		
 		} catch (Exception e) {
 			e.printStackTrace();

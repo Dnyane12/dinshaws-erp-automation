@@ -95,7 +95,7 @@ public class PurchaseReturnFlow {
 			prnPages.clickGrnDetailsTab();
 			
 			logger.info("clicking edit button icon");
-			WaitHelper.waitForClickable(driver, prnPages.getEditIcon(), 20);
+			WaitHelper.waitForClickable(driver, prnPages.getEditIcon(), 10);
 			prnPages.clickEditButtonIcon();
 			
 			logger.info("entering return from store field value");

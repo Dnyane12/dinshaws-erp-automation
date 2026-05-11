@@ -91,10 +91,10 @@ private static Logger logger =LogManager.getLogger(GRNPostingPage.class);
 	
 	public void SearchGRNNo(String GRNNo) {
 		logger.info("Waiting for invisibility of dotSpinner");
-		WaitHelper.waitForInvisibilityOfElementLocated(driver, dotSpinner, 30);
+		WaitHelper.waitForInvisibilityOfElementLocated(driver, dotSpinner, 20);
 				
 		logger.info("Waiting and Clicking GRNPostingSearch field.");
-		WaitHelper.waitForClickable(driver, GRNPostingSearch,30);
+		WaitHelper.waitForClickable(driver, GRNPostingSearch,10);
 		GRNPostingSearch.click();
 		GRNPostingSearch.sendKeys(GRNNo);
 	}

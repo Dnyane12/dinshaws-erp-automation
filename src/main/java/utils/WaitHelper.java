@@ -122,6 +122,40 @@ public class WaitHelper {
         }
     }
 
+    
+    public static void waitForRefreshAndClick1(WebDriver driver, By locator, int timeoutInSeconds) {
+        
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
+
+        try {
+            // Wait until fresh clickable element is available
+            WebElement element = wait.until(
+                    ExpectedConditions.refreshed(
+                            ExpectedConditions.elementToBeClickable(locator)));
+
+            // Scroll element into view
+            ((JavascriptExecutor) driver).executeScript(
+                    "arguments[0].scrollIntoView({block:'center'});", element);
+
+            // Click element
+            element.click();
+
+        } catch (ElementClickInterceptedException e) {
+            // Fallback to JS click
+            WebElement element = driver.findElement(locator);
+            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
+
+        } catch (TimeoutException e) {
+            throw new RuntimeException("Element not clickable within timeout: " + locator);
+
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to click element: " + locator, e);
+        }
+    }
+    
+    
+    
+    
     /**
      * Safe click using a By locator. Will wait for clickable and use the robust click strategy.
      */
@@ -211,6 +245,10 @@ public class WaitHelper {
 	    wait.until(ExpectedConditions.not(ExpectedConditions.urlToBe(previousUrl)));
     }
     
+    public static void waitUntilEnabled(WebDriver driver, WebElement element, int sec) {
+	    new WebDriverWait(driver, Duration.ofSeconds(sec))
+	        .until(driver1 -> element.isEnabled());
+	}
     
     public static void normalWait(WebDriver driver,int seconds) {
 	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));

@@ -21,7 +21,7 @@ public class LoginFlow{
 		logger.info("called LoginFlow constructor in LoginFlow");
         this.driver = driver;
         loginPage = new LoginPage(driver);	    
-	    prop = new PropertyReader("InventoryModule/application.properties");
+	    prop = new PropertyReader("SetUp/application.properties");
     }
 	
 	

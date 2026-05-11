@@ -197,7 +197,7 @@ public class GoodReceiptNotePage {
 	}
 
 	public void clickCreateNewButton() {
-		WaitHelper.waitForInvisibilityOfElementLocated(driver, dotSpinner, 20);
+		WaitHelper.waitForInvisibilityOfElementLocated(driver, dotSpinner, 10);
 		JavascriptExecutor js=  (JavascriptExecutor)driver;
 		
         WaitHelper.waitForClickable(driver, createNewButton, 10);

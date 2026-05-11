@@ -79,8 +79,7 @@ public class HomeFlow {
 			logger.info("ing for sales module link and clicking");
 			WaitHelper.waitForInvisibilityOfElementLocated(driver,homePage.getDotSpinner(), 10);
 			
-			WaitHelper.waitForClickable(driver, homePage.getSalesModuleLink(), 10);
-			 homePage.getSalesModuleLink().click();
+			WaitHelper.waitForRefreshAndClick(driver,  homePage.getSalesModuleLink(), 10);		
 			logger.info("done clicking salesModuleLink");
 				
 			logger.info("Waiting for invisibility of dotSpinner.");
@@ -98,7 +97,6 @@ public class HomeFlow {
 	//Test to click to sales module
 	public void clickToSalesModule1() throws InterruptedException {
 			logger.info("called clickToSalesModule method in HomeFlow");
-			//.until(ExpectedConditions.elementToBeClickable(homePage.getSalesModuleLink()));
 			homePage.clickSalesModule();	
 			homePage.clickTransLink();
 		}
