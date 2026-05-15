@@ -131,6 +131,7 @@ public class GoodReceiptNoteTest extends SetUp {
 	}
 
 	
+	
 	@Test(description="Validate PO data integrity in GRN.",enabled = false)
 	public void validatePoDataInGRNInfoTab() {
 		try {
