@@ -128,7 +128,7 @@ public class GoodReceiptNoteTest extends SetUp {
 		
 		grnPage.clickCreateNewButton();
 		logger.info("Clicked Create New button");
-		
+		System.out.println("Test");
 		
 	}
 
