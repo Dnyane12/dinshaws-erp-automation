@@ -13,7 +13,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import model.DispatchStockColorRow;
+
+import models.DispatchStockColorRow;
 import utils.SimpleDropUtil;
 import utils.WaitHelper;
 import utils.WaitUtilityDuplicate;

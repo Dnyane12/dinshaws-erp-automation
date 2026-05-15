@@ -10,6 +10,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import flowPack.setUpFlow.HomeFlow;
 import flowPack.setUpFlow.LoginFlow;
+import models.GrnTestData;
 import pageObjects.inventory.transaction.GoodReceiptNotePage;
 import pageObjects.setup.HomePage;
 import utils.PropertyReader;
@@ -31,167 +32,218 @@ public class GoodReceiptNoteFlow {
 		homeFlow = new HomeFlow(driver);
 		propReader = new PropertyReader("InventoryModule/grnTestData.properties");
 	}
-	
-	
+
 	public void prepareEnvToDirectlyOpenGRNForm() {
-		logger.info("calling openGRNFormDirectly() method in GRN Flow class.");	
-			logger.info("Waiting for invisibility of dotSpinner.");
-			
-			WaitHelper.waitForInvisibilityOfElementLocated(driver,grnPage.getDotSpinner(), 10);
-			WaitHelper.waitForClickable(driver, grnPage.getStoreLink(), 10);
-			
-			JavascriptExecutor js = (JavascriptExecutor) driver;
-    	    js.executeScript("arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});", grnPage.getStoreLink());
-			js.executeScript("arguments[0].click()", grnPage.getStoreLink());
-			
-			
-			WaitHelper.waitForClickable(driver, grnPage.getGoodReceiptNoteFormLink(), 10);
-			// Capture current URL before clicking
-		    String previousUrl = driver.getCurrentUrl();
-		    System.out.println("Previous URL: " + previousUrl);
+		logger.info("calling openGRNFormDirectly() method in GRN Flow class.");
+		logger.info("Waiting for invisibility of dotSpinner.");
 
-		    grnPage.clickGrnLink();
-		    logger.info("Opened Good Receipt Note form");
-		    
-		    String currentUrl = driver.getCurrentUrl();
-		    System.out.println("current Url: " + currentUrl);
-
-		    WaitHelper.waitToDealWithCatche(driver,previousUrl);
-			
-		    String currentUrl1 = driver.getCurrentUrl();
-		    System.out.println("current Url1: " + currentUrl1);
-			
-
-			logger.info("Waiting for invisibility of dotspinner.");
-			WaitHelper.waitForInvisibilityOfElementLocated(driver, grnPage.getDotSpinner(), 10);
-		
-	}
-		
-
-	public void prepareEnvToStartingFormLogin() {
-		try {
-		logger.info("===== Starting GRN Flow Execution, Step 1: Performing Login Flow=====");
-		loginFlow.loginFlowCheck();
-		
-		logger.info("clicking inventoryMod  in HomePage");
 		WaitHelper.waitForInvisibilityOfElementLocated(driver, grnPage.getDotSpinner(), 10);
-		logger.info("Step 2: Navigating to Inventory → Store → GRN");
-		homeFlow.clickInvModAndStoreLink();
+		WaitHelper.waitForClickable(driver, grnPage.getStoreLink(), 10);
 
-	
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});", grnPage.getStoreLink());
+		js.executeScript("arguments[0].click()", grnPage.getStoreLink());
+
+		WaitHelper.waitForClickable(driver, grnPage.getGoodReceiptNoteFormLink(), 10);
+		// Capture current URL before clicking
+		String previousUrl = driver.getCurrentUrl();
+		System.out.println("Previous URL: " + previousUrl);
+
 		grnPage.clickGrnLink();
 		logger.info("Opened Good Receipt Note form");
 
-		//logger.info("waiting for invisibility of dotspinner.");
-		//WaitHelper.waitForInvisibilityOfElementLocated(driver, grnPage.getDotSpinner(), 10);
-		}catch(Exception e) {
+		String currentUrl = driver.getCurrentUrl();
+		System.out.println("current Url: " + currentUrl);
+
+		WaitHelper.waitToDealWithCatche(driver, previousUrl);
+
+		String currentUrl1 = driver.getCurrentUrl();
+		System.out.println("current Url1: " + currentUrl1);
+
+		logger.info("Waiting for invisibility of dotspinner.");
+		WaitHelper.waitForInvisibilityOfElementLocated(driver, grnPage.getDotSpinner(), 10);
+
+	}
+
+	public void prepareEnvToStartingFormLogin() {
+		try {
+			logger.info("===== Starting GRN Flow Execution, Step 1: Performing Login Flow=====");
+			loginFlow.loginFlowCheck();
+
+			logger.info("clicking inventoryMod  in HomePage");
+			WaitHelper.waitForInvisibilityOfElementLocated(driver, grnPage.getDotSpinner(), 20);
+			logger.info("Step 2: Navigating to Inventory → Store → GRN");
+			homeFlow.clickInvModAndStoreLink();
+
+			grnPage.clickGrnLink();
+			logger.info("Opened Good Receipt Note form");
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	
 	// Method to execute GRN Flow OR create GRN
 	public String executeGrnFlow(String poNo) {
 		try {
-		//WaitHelper.waitForInvisibilityOfElementLocated(driver, grnPage.getDotSpinner(), 10);	
-		grnPage.clickCreateNewButton();
-		logger.info("Clicked Create New button");
+			// WaitHelper.waitForInvisibilityOfElementLocated(driver,
+			// grnPage.getDotSpinner(), 10);
+			grnPage.clickCreateNewButton();
+			logger.info("Clicked Create New button");
 
-		logger.info("Waiting for invisibility of dotSpinner.");
-		WaitHelper.waitForInvisibilityOfElementLocated(driver, grnPage.getDotSpinner(), 10);
-		
-			logger.info("Step 3: Selecting Vendor and PO Number");	
+			logger.info("Waiting for invisibility of dotSpinner.");
+			WaitHelper.waitForInvisibilityOfElementLocated(driver, grnPage.getDotSpinner(), 10);
+
+			logger.info("Step 3: Selecting Vendor and PO Number");
 			WaitHelper.waitForClickable(driver, grnPage.getVendorDropField(), 10);
-			
+
 			grnPage.selectVendor(propReader.getProperty("vendorDropOption"));
 			logger.info("Vendor Selected: {}", propReader.getProperty("vendorDropOption"));
 
-		WaitHelper.waitForClickable(driver, grnPage.getPoNoDropList(), 10);
-		System.out.println("poNo in flow class: "+poNo);
-		grnPage.enterPoNoToSearch(poNo);
-		//logger.info("PO Number Selected: {}", propReader.getProperty("poNoDropOption"));
+			WaitHelper.waitForClickable(driver, grnPage.getPoNoDropList(), 10);
+			System.out.println("poNo in flow class: " + poNo);
+			grnPage.enterPoNoToSearch(poNo);
+			// logger.info("PO Number Selected: {}",
+			// propReader.getProperty("poNoDropOption"));
 
-		WaitHelper.waitForClickable(driver, grnPage.getFetchDataButton(), 10);
-		grnPage.clickFetchData();
-		logger.info("Clicked Fetch Data button");
+			WaitHelper.waitForClickable(driver, grnPage.getFetchDataButton(), 10);
+			grnPage.clickFetchData();
+			logger.info("Clicked Fetch Data button");
 
-		WaitHelper.waitForVisible(driver,grnPage.getGridRow(), 10);
-		logger.info("Step 4: Entering GRN Information");		
-		grnPage.clickGrnInfoTab();
+			WaitHelper.waitForVisible(driver, grnPage.getGridRow(), 10);
+			logger.info("Step 4: Entering GRN Information");
+			grnPage.clickGrnInfoTab();
 
-		WaitHelper.waitForClickable(driver, grnPage.getTransporterMode(), 20);
-		grnPage.selectTransporterMode(propReader.getProperty("transporterModeLabel"),
-				propReader.getProperty("transporterModeOption"));
-		logger.info("Transporter mode selected: {}", propReader.getProperty("transporterModeOption"));
+			WaitHelper.waitForClickable(driver, grnPage.getTransporterMode(), 20);
+			grnPage.selectTransporterMode(propReader.getProperty("transporterModeLabel"),
+					propReader.getProperty("transporterModeOption"));
+			logger.info("Transporter mode selected: {}", propReader.getProperty("transporterModeOption"));
 
-		grnPage.enterLrNo(propReader.getProperty("lrNo"));
-		logger.info("LR Number entered");
+			grnPage.enterLrNo(propReader.getProperty("lrNo"));
+			logger.info("LR Number entered");
 
-		grnPage.enterLrDate(propReader.getProperty("lrDate"));
-		logger.info("LR Date entered");
+			grnPage.enterLrDate(propReader.getProperty("lrDate"));
+			logger.info("LR Date entered");
 
-		grnPage.enterInvoiceNo(propReader.getProperty("InvoiceNo"));
-		logger.info("Invoice Number entered");
+			grnPage.enterInvoiceNo(propReader.getProperty("InvoiceNo"));
+			logger.info("Invoice Number entered");
 
-		grnPage.enterInvoiceDate(propReader.getProperty("invoiceDate"));
-		logger.info("Invoice Date entered");
+			grnPage.enterInvoiceDate(propReader.getProperty("invoiceDate"));
+			logger.info("Invoice Date entered");
 
-		logger.info("Step 5: Editing GRN Details and Quantities");
-		grnPage.clickGrnDetailsTab();
+			logger.info("Step 5: Editing GRN Details and Quantities");
+			grnPage.clickGrnDetailsTab();
 
-		grnPage.clickEditIcon();
+//			int poRecordsCount = Integer.parseInt(propReader.getProperty("poRecordsCount"));						
+//			System.out.println("poRecordsCount: " + poRecordsCount);
 
-		grnPage.enterInvoiceQuantity(propReader.getProperty("invoiceQty"));
-		logger.info("Invoice Qty entered: {}", propReader.getProperty("invoiceQty"));
+//			for (int i = 1; i <= poRecordsCount; i++) {				
+//                System.out.println("Processing record number: " + i);
 
-		grnPage.enterReceivedQuantity(propReader.getProperty("receivedQty"));
-		logger.info("Received Qty entered: {}", propReader.getProperty("receivedQty"));
+//                int itemRowIndex = i; // Set the row index for the current record
 
-		grnPage.enterAcceptedQuantity(propReader.getProperty("acceptedQty"));
-		logger.info("Accepted Qty entered: {}", propReader.getProperty("acceptedQty"));
+			WaitHelper.waitForClickable(driver, grnPage.getEditIcon(), 10);
+			grnPage.clickEditIcon();
+			grnPage.enterInvoiceQuantity(propReader.getProperty("invoiceQty"));
+			logger.info("Invoice Qty entered: {}", propReader.getProperty("invoiceQty"));
 
-		grnPage.enterRemark(propReader.getProperty("remark"));
-		logger.info("Remark entered");
+			grnPage.enterReceivedQuantity(propReader.getProperty("receivedQty"));
+			logger.info("Received Qty entered: {}", propReader.getProperty("receivedQty"));
 
-		grnPage.clickUpdateButton();
-		logger.info("Update button clicked");
+			grnPage.enterAcceptedQuantity(propReader.getProperty("acceptedQty"));
+			logger.info("Accepted Qty entered: {}", propReader.getProperty("acceptedQty"));
 
-		
-		// Give backend time to trigger recalculation
-		WaitHelper.waitForInvisibilityOfElementLocated(driver, grnPage.getDotSpinner(), 20);
-		
-		logger.info("Extracting Net Amount from GRN Details");
-		//WaitHelper.waitForVisible(driver, grnPage.getNetvalueWholeText(), 20);
-		grnPage.extractTotalNetAmount();
+			grnPage.enterRemark(propReader.getProperty("remark"));
+			logger.info("Remark entered");
 
-		logger.info("Entered Net Amount in GRN Info tab");
+			grnPage.clickUpdateButton();
+//				logger.info("Update button clicked");
+//				System.out.println("Updated record number: " + i);
 
-		grnPage.clickSubmitButton();
-		logger.info("Clicked Submit button");
-		
-		String grnNoCreated= extractGrnNo();
-				
-		logger.info("===== GRN Flow Executed Successfully =====");
-		return grnNoCreated;
-		
-		}catch(Exception e) {
+			// Give backend time to trigger recalculation
+			WaitHelper.waitForInvisibilityOfElementLocated(driver, grnPage.getDotSpinner(), 20);
+
+			logger.info("Extracting Net Amount from GRN Details");
+			// WaitHelper.waitForVisible(driver, grnPage.getNetvalueWholeText(), 20);
+			grnPage.extractTotalNetAmount();
+			logger.info("Entered Net Amount in GRN Info tab");
+
+			grnPage.clickSubmitButton();
+			logger.info("Clicked Submit button");
+
+			String grnNoCreated = extractGrnNo();
+
+			logger.info("===== GRN Flow Executed Successfully =====");
+			return grnNoCreated;
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
-		}		
-		
+		}
+
 	}
-	
+
+	public String executeGrnFlow1(GrnTestData data) {
+		try {
+			grnPage.clickCreateNewButton();
+
+			WaitHelper.waitForInvisibilityOfElementLocated(driver, grnPage.getDotSpinner(), 10);
+
+			grnPage.selectVendor(data.getVendorDropOption());
+
+			grnPage.enterPoNoToSearch(data.getPoNoDropOption());
+
+			grnPage.clickFetchData();
+
+			WaitHelper.waitForVisible(driver, grnPage.getGridRow(), 10);
+
+			grnPage.clickGrnInfoTab();
+
+			grnPage.selectTransporterMode(data.getTransporterModeLabel(),data.getTransporterModeOption());
+
+			grnPage.enterLrNo(data.getLrNo());
+
+			grnPage.enterLrDate(data.getLrDate());
+
+			grnPage.enterInvoiceNo(data.getInvoiceNo());
+
+			grnPage.enterInvoiceDate(data.getInvoiceDate());
+
+			grnPage.clickGrnDetailsTab();
+
+			grnPage.clickEditIcon();
+
+			grnPage.enterInvoiceQuantity(data.getInvoiceQty());
+
+			grnPage.enterReceivedQuantity(data.getReceivedQty());
+
+			grnPage.enterAcceptedQuantity(data.getAcceptedQty());
+
+			grnPage.enterRemark(data.getRemark());
+
+			grnPage.clickUpdateButton();
+			
+			WaitHelper.waitForInvisibilityOfElementLocated(driver, grnPage.getDotSpinner(), 20);
+			
+			grnPage.extractTotalNetAmount();
+			
+			grnPage.clickSubmitButton();
+			
+			return grnPage.extractGrnNo();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	public String extractGrnNo() {
-		String compSuccMsg=grnPage.extractGrnNo();
-		String parts[]= compSuccMsg.trim().split("ID:");
-		String grnNo=parts[1];
-		System.out.println("grnNo: "+grnNo);
+		String compSuccMsg = grnPage.extractGrnNo();
+		String parts[] = compSuccMsg.trim().split("ID:");
+		String grnNo = parts[1];
+		System.out.println("grnNo: " + grnNo);
 		return grnNo;
 	}
-	
-	
-	
-	
+
 	public void flowUptoPoNoSel() {
 		WaitHelper.waitForClickable(driver, grnPage.getCreateNewButton(), 10);
 		grnPage.clickCreateNewButton();
@@ -206,7 +258,6 @@ public class GoodReceiptNoteFlow {
 		grnPage.enterPoNoToSearch(propReader.getProperty("poNoDropOption"));
 		logger.info("PO Number Selected: {}", propReader.getProperty("poNoDropOption"));
 	}
-	
 
 	// Method to check proper creation of GRN no.
 	public String checkGrnNoCreation() {
@@ -263,7 +314,6 @@ public class GoodReceiptNoteFlow {
 		System.out.println("selVendor: " + selVendor + ", selPoNo: " + selPoNo);
 	}
 
-	
 	public void checkMaxLimitOfInputField() {
 		WaitHelper.waitForClickable(driver, grnPage.getCreateNewButton(), 10);
 		grnPage.clickCreateNewButton();

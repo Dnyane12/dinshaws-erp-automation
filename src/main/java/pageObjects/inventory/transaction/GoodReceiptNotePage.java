@@ -33,7 +33,7 @@ public class GoodReceiptNotePage {
 
 	By vendorDropField=By.xpath("(//label[normalize-space(text()='Vendor')]/following::input[@class='igx-input-group__input'])[6]");
 
-	By vendorDropOptField= By.xpath("//div//span[contains(normalize-space(text()),'SUP0000199')]");
+	By vendorDropOptField= By.xpath("//div//span[contains(normalize-space(text()),'++')]");
 	
 	@FindBy(xpath = "(//label[normalize-space(text())='PO No.']/following::igx-icon[normalize-space(text())='expand_more'])[1]")
 	private WebElement poNoDropList;
@@ -207,6 +207,7 @@ public class GoodReceiptNotePage {
 	}
 
 	public void selectVendor(String vendorDropOption) {
+		By vendorDropOptField= By.xpath("//div//span[contains(normalize-space(text()),'"+vendorDropOption+"')]");
 		SimpleDropUtil.selectDropOption(driver,vendorDropField, vendorDropOptField,vendorDropOption);
 	}
 
@@ -268,11 +269,17 @@ public class GoodReceiptNotePage {
 		grnDetailsTab.click();
 	}
 
-	public void clickEditIcon() {
+	public void clickEditIcon(int itemRowIndex) {
+		By editIconBy= By.xpath("(//igx-icon[normalize-space(text())='edit' and contains(@class,'material-icons')])["+itemRowIndex+"]");	
+		WaitHelper.waitForClickable(driver, editIconBy, 10);
+		driver.findElement(editIconBy).click();
+	}
+
+	public void clickEditIcon() {		
 		WaitHelper.waitForClickable(driver, editIcon, 10);
 		editIcon.click();
 	}
-
+	
 	public void enterInvoiceQuantity(String invoiceQty) {
 		WaitHelper.waitForClickable(driver, invoiceQtyField, 10);
 		invoiceQtyField.click();
@@ -302,29 +309,13 @@ public class GoodReceiptNotePage {
 		updateButton.click();
 	}
 
-	public void extractTotalNetAmount() {
-		
-//			WaitHelper.waitForTextToBePresentInElement(driver, netvalueWholeText,"Total Net Value:", 30);
-//			String compText = netvalueWholeText.getText();	
-//			String netAmount = "";
-//
-//			// If contains colon, extract value after colon
-//			if (compText.contains(":")) {
-//				netAmount = compText.substring(compText.indexOf(":") + 1).trim();
-//			} else {
-//				// Fallback: extract last word (numbers usually at end)
-//				String[] parts = compText.split(" ");
-//				netAmount = parts[parts.length - 1].trim();
-//			}
-
-			
+	public void extractTotalNetAmount() {		
 			// Step 1: Wait for label to appear
 		    WaitHelper.waitForTextToBePresentInElement(driver, netvalueWholeText, "Total Net Value:", 30);
 
 		    // Step 2: Poll until a valid numeric value appears after the colon
 		    WaitHelper.normalWait(driver,60);
-		    
-			
+		    		
 		    String netAmount =WaitHelper.waitForValidNumericValueAfterColon(driver, netvalueWholeText,30);
 			
 			// logger.info("Extracted Net Amount: {}", netAmount);

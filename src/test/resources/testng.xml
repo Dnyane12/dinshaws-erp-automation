@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite >
 <suite name="Full System Suite">
-	<!--listeners> <listener class-name="UtilityClasses.TestListener" /> </listeners 
-		! -->
+     
+     <listeners>
+     <listener class-name="utility.TestListener"/>
+     </listeners>
 
 	<!--test name="Tax Invoice Test">
 		<classes>

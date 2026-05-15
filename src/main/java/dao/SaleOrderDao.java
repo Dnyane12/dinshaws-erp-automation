@@ -5,7 +5,7 @@ package dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import model.SaleOrderDBModel;
+import models.SaleOrderDBModel;
 import utils.DatabaseUtility;
 
 public class SaleOrderDao {

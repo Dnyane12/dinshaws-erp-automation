@@ -12,7 +12,7 @@ import org.openqa.selenium.WebElement;
 import dao.SaleOrderDao;
 import flowPack.setUpFlow.HomeFlow;
 import flowPack.setUpFlow.LoginFlow;
-import model.SaleOrderDBModel;
+import models.SaleOrderDBModel;
 import pageObjects.sales.transaction.MultiSaleOrderPage;
 import pageObjects.sales.transaction.SaleDispatchPage;
 import utils.PropertyReader;

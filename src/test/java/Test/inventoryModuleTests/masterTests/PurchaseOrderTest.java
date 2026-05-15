@@ -1,6 +1,7 @@
 package Test.inventoryModuleTests.masterTests;
 
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Map;
 
@@ -11,17 +12,20 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import Test.setUpTests.SetUp;
 import flowPack.inventoryModuleFlow.masterFlow.PurchaseOrderFlow;
-import model.PartyMasterDTO;
+import models.PartyMasterDTO;
 import pageObjects.inventory.master.PurchaseOrderPages;
+import utility.TestListener;
 import utils.ExcelDataMappingUtil;
 import utils.PropertyReader;
 import utils.WaitHelper;
 
+@Listeners(TestListener.class)
 public class PurchaseOrderTest extends SetUp {
 	PurchaseOrderPages poPages;
 	PurchaseOrderFlow poFlow;
@@ -29,6 +33,7 @@ public class PurchaseOrderTest extends SetUp {
 	PropertyReader propReader;
 	SoftAssert softAssert;
 
+	
 	@BeforeClass
 	public void objInitilization() {
 		logger.info("called objInitilization method in PurchaseOrderTest");
@@ -39,6 +44,7 @@ public class PurchaseOrderTest extends SetUp {
 		softAssert = new SoftAssert();
 	}
 
+	
 	// Test to validate purchase order creation.
 	@Test(enabled = false, priority = 0)
 	public void validatePurchaseOrderCreation() {
@@ -79,37 +85,7 @@ public class PurchaseOrderTest extends SetUp {
 		softAssert.assertEquals(expeUpSuccMsg, actUpSuccMsg, "Record is not updated successfully.");
 		softAssert.assertAll();
 	}
-
-	// Test to validate that other fields are deactive until series field is
-	// selected.
-	@Test(enabled = false)
-	public void validateDeactivityOfOtherFields() {
-		WaitHelper.waitForVisible(driver, poPages.getSeriesDropdownField(), 10);
-		boolean selectStatus = driver.findElement(poPages.getSeriesDropdownField()).isSelected();
-
-		if (!selectStatus) {
-			WaitHelper.waitForClickable(driver, poPages.getPartyDropdown(), 10);
-			// WebElement partyDrop = poPages.getPartyDropdown();
-			// boolean enabilityStatus =partyDrop.isEnabled();
-//	   if(!enabilityStatus) {
-//		Assert.assertFalse(enabilityStatus,"Other fields are active,when series field is not selected.");
-//	   }else {
-//		Assert.assertFalse(enabilityStatus,"Other fields are deactive,when series field is not selected.");
-//	   }
-		}
-	}
-
-	// Test to validate the party code is provided in dropdown list or not.
-	@Test(enabled = false)
-	public void validatePartyCodeForPartyDrop() {
-		WaitHelper.waitForClickable(driver, poPages.getSeriesDropdownField(), 10);
-		poPages.selectSeries(propReader.getProperty("SeriesDropOption"));
-
-		WaitHelper.waitForClickable(driver, poPages.getPartyDropdown(), 10);
-		poPages.selectParty(propReader.getProperty("PartyDropOption"));
-		// String partyValue= poPages.getPartyDropdown().getText();
-		// partyValue.trim();
-	}
+	
 
 	// Test to validate purchase order flow.
 	@Test(enabled = false)
@@ -157,6 +133,7 @@ public class PurchaseOrderTest extends SetUp {
 		softAssert.assertAll();
 	}
 
+	
 	
 	@Test(enabled = true)
 	public void validatePoNetAmount() {
@@ -349,5 +326,37 @@ public class PurchaseOrderTest extends SetUp {
 		softAssert.assertNotNull(poNo, "PO number is not generated for the purchase order with multiple items.");
 		softAssert.assertAll();
 	}
+	
+	
+	// Test to validate that other fields are deactive until series field is
+	// selected.
+	@Test(enabled = false)
+	public void validateDeactivityOfOtherFields() {
+		WaitHelper.waitForVisible(driver, poPages.getSeriesDropdownField(), 10);
+		boolean selectStatus = driver.findElement(poPages.getSeriesDropdownField()).isSelected();
+
+		if (!selectStatus) {
+			WaitHelper.waitForClickable(driver, poPages.getPartyDropdown(), 10);
+			// WebElement partyDrop = poPages.getPartyDropdown();
+			// boolean enabilityStatus =partyDrop.isEnabled();
+//	   if(!enabilityStatus) {
+//		Assert.assertFalse(enabilityStatus,"Other fields are active,when series field is not selected.");
+//	   }else {
+//		Assert.assertFalse(enabilityStatus,"Other fields are deactive,when series field is not selected.");
+//	   }
+		}
+	}
+	
+	// Test to validate the party code is provided in dropdown list or not.
+		@Test(enabled = false)
+		public void validatePartyCodeForPartyDrop() {
+			WaitHelper.waitForClickable(driver, poPages.getSeriesDropdownField(), 10);
+			poPages.selectSeries(propReader.getProperty("SeriesDropOption"));
+
+			WaitHelper.waitForClickable(driver, poPages.getPartyDropdown(), 10);
+			poPages.selectParty(propReader.getProperty("PartyDropOption"));
+			// String partyValue= poPages.getPartyDropdown().getText();
+			// partyValue.trim();
+		}
 
 }

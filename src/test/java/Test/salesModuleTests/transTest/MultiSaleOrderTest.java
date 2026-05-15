@@ -21,7 +21,7 @@ import org.testng.asserts.SoftAssert;
 
 import Test.setUpTests.SetUp;
 import flowPack.salesModuleFlow.transactionFlow.MultiSaleOrderFlow;
-import model.SaleOrderDBModel;
+import models.SaleOrderDBModel;
 import pageObjects.sales.transaction.MultiSaleOrderPage;
 import pageObjects.sales.transaction.SaleDispatchPage;
 import utils.CommonDatabaseUtility;

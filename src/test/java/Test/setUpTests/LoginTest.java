@@ -34,11 +34,12 @@ public void validateLogin() {
 		String expMsg ="Login Successful";
 		
 		logger.info("Extracting the actual login message through getText method");
-		WaitHelper.waitForClickable(driver, loginPage.getLoginSussMessageField(), 10);
+		WaitHelper.waitForClickable(driver, loginPage.getLoginSussMessageField(), 10);		
 		String actualMsg= loginPage.getLoginSussMessageField().getText();
 		
-		logger.info("Validating actual login message and expected Login Message using assert");
+		logger.info("Validating actual and expected Login Message using assert");		
 		Assert.assertEquals(actualMsg,expMsg,"The login Is unsuccussesful!");
+		
 	} catch (Exception e) {
 		e.printStackTrace();
 	}	
