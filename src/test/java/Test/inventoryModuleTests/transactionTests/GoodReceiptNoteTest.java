@@ -127,11 +127,12 @@ public class GoodReceiptNoteTest extends SetUp {
 		WaitHelper.waitForVisible(driver, grnPage.getListingPageHeader(), 10);
 		
 		grnPage.clickCreateNewButton();
-		logger.info("Clicked Create New button");	
+		logger.info("Clicked Create New button");
+		
+		
 	}
 
-	
-	
+		
 	@Test(description="Validate PO data integrity in GRN.",enabled = false)
 	public void validatePoDataInGRNInfoTab() {
 		try {
