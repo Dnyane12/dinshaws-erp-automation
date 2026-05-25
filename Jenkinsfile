@@ -1,39 +1,69 @@
 pipeline {
+
     agent any
 
-    triggers {
-        githubPush()
+    tools {
+        jdk 'MyJDK'
+        maven 'MyMaven'
+    }
+
+    options {
+        timestamps()
+
+        buildDiscarder(logRotator(
+            daysToKeepStr: '7',
+            numToKeepStr: '10'
+        ))
     }
 
     stages {
 
-        stage('Checkout') {
+        stage('Clean Workspace') {
             steps {
-                git branch: 'main',
-                url: 'https://github.com/yourusername/yourrepo.git'
+                cleanWs()
             }
         }
 
-        stage('Build') {
+        stage('Checkout Code') {
             steps {
-                bat 'mvn clean compile'
+                git branch: 'master',
+                url: 'https://github.com/Dnyane12/dinshaws-erp-automation.git'
             }
         }
 
-        stage('Run Automation Tests') {
+        stage('Build & Execute Tests') {
             steps {
-                bat 'mvn test'
+                bat 'cd AIIMS_Project && mvn clean test'
+            }
+        }
+
+        stage('Generate Allure Report') {
+            steps {
+
+                allure includeProperties: false,
+                jdk: '',
+                results: [[path: 'AIIMS_Project/target/allure-results']]
             }
         }
     }
 
     post {
+
+        always {
+
+            archiveArtifacts artifacts: 'AIIMS_Project/reports/**/*.png',
+            fingerprint: true
+
+            archiveArtifacts artifacts: 'AIIMS_Project/reports/**/*.html',
+            fingerprint: true
+        }
+
         success {
-            echo 'Automation Execution Successful'
+            echo 'Build Passed'
         }
 
         failure {
-            echo 'Automation Execution Failed'
+            echo 'Build Failed'
         }
     }
 }
