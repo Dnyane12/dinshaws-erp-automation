@@ -32,7 +32,6 @@ public class PurchaseOrderTest extends SetUp {
 	PropertyReader propReader;
 	SoftAssert softAssert;
 
-	
 	@BeforeClass
 	public void objInitilization() {
 		logger.info("called objInitilization method in PurchaseOrderTest");
@@ -43,19 +42,18 @@ public class PurchaseOrderTest extends SetUp {
 		softAssert = new SoftAssert();
 	}
 
-	
 	// Test to validate purchase order creation.
 	@Test(enabled = true, priority = 0)
 	public void validatePurchaseOrderCreation() {
-			logger.info("called validatePurchaseOrderCreation method in PurchaseOrderTest");
-			String poNo = poFlow.creatingPurchaseOrder();
+		logger.info("called validatePurchaseOrderCreation method in PurchaseOrderTest");
+		String poNo = poFlow.creatingPurchaseOrder();
 
-			String expeSuccMsg = "Purchase Order Save successfully";
-			String actSuccMsg = poPages.getSaveSucMsgText();
+		String expeSuccMsg = "Purchase Order Save successfully";
+		String actSuccMsg = poPages.getSaveSucMsgText();
 
-			System.out.println("expeUpSuccMsg: " + expeSuccMsg + ",actSuccMsg: " + actSuccMsg);
-			softAssert.assertTrue(actSuccMsg.startsWith(expeSuccMsg), "Record is not created successfully.");
-			softAssert.assertAll();
+		System.out.println("expeUpSuccMsg: " + expeSuccMsg + ",actSuccMsg: " + actSuccMsg);
+		softAssert.assertTrue(actSuccMsg.startsWith(expeSuccMsg), "Record is not created successfully.");
+		softAssert.assertAll();
 	}
 
 	// Test to validate the update functionality of PO.
@@ -80,7 +78,6 @@ public class PurchaseOrderTest extends SetUp {
 		softAssert.assertEquals(expeUpSuccMsg, actUpSuccMsg, "Record is not updated successfully.");
 		softAssert.assertAll();
 	}
-	
 
 	// Test to validate purchase order flow.
 	@Test(enabled = false)
@@ -128,8 +125,6 @@ public class PurchaseOrderTest extends SetUp {
 		softAssert.assertAll();
 	}
 
-	
-	
 	@Test(enabled = false)
 	public void validatePoNetAmount() {
 		poFlow.flowUptoRateEntering();
@@ -138,7 +133,7 @@ public class PurchaseOrderTest extends SetUp {
 		double actPoQty = Double.parseDouble(poPages.getPoQtyEntered().getAttribute("value"));
 
 		WaitHelper.waitForVisible(driver, poPages.getPoRateEntered(), 10);
-		double actRate = Double.parseDouble(poPages.getPoRateEntered().getAttribute("value"));		
+		double actRate = Double.parseDouble(poPages.getPoRateEntered().getAttribute("value"));
 
 		WaitHelper.waitForVisible(driver, poPages.getDiscount(), 10);
 		double actDiscount = Double.parseDouble(poPages.getDiscount().getAttribute("value"));
@@ -151,7 +146,7 @@ public class PurchaseOrderTest extends SetUp {
 
 		WaitHelper.waitForVisible(driver, poPages.getPoNetAmount(), 10);
 		double actPoNetAmtValue = Double.parseDouble(poPages.getPoNetAmount().getAttribute("value"));
-		
+
 		logger.info("capturing the expected po qty,rate ,discount and PackForward,which was entered.");
 		double expPoQty = Double.parseDouble(propReader.getProperty("QuantityValue"));
 		double expRate = Double.parseDouble(propReader.getProperty("rateValue"));
@@ -166,24 +161,23 @@ public class PurchaseOrderTest extends SetUp {
 		softAssert.assertEquals(actPoQty, expPoQty, "Actual and expected PO quantities are not matching !");
 		softAssert.assertEquals(actRate, expRate, "Actual and expected PO rate are not matching !");
 		softAssert.assertEquals(actDiscount, expDiscount, "Actual and expected PO discount are not matching !");
-		softAssert.assertEquals(actPkgForward, expPackForward,"Actual and expected PO package forword are not matching !");
+		softAssert.assertEquals(actPkgForward, expPackForward,
+				"Actual and expected PO package forword are not matching !");
 		softAssert.assertEquals(actGrossAmt, expGrossAmount, "Actual and expected PO gross amount are not matching !");
 		softAssert.assertEquals(actPoNetAmtValue, expNetAmount, "Actual and expected PO net amount are not matching !");
-		
+
 		softAssert.assertAll();
-		
-		System.out.println("actPoQty:" + actPoQty+ ", expPoQty: "+expPoQty);
-		System.out.println("actRate:" + actRate+ ", expRate: "+expRate);
-		System.out.println("actDiscount:" + actDiscount+ ", expDiscount: "+expDiscount);
-		System.out.println("actPkgForward:" + actPkgForward + ", expPackForward: "+expPackForward);
-		System.out.println("actGrossAmt:" + actGrossAmt + ", expGrossAmount: "+expGrossAmount);
-		System.out.println("actPoNetAmtValue:" + actPoNetAmtValue + ", expNetAmount: "+expNetAmount);
-		
+
+		System.out.println("actPoQty:" + actPoQty + ", expPoQty: " + expPoQty);
+		System.out.println("actRate:" + actRate + ", expRate: " + expRate);
+		System.out.println("actDiscount:" + actDiscount + ", expDiscount: " + expDiscount);
+		System.out.println("actPkgForward:" + actPkgForward + ", expPackForward: " + expPackForward);
+		System.out.println("actGrossAmt:" + actGrossAmt + ", expGrossAmount: " + expGrossAmount);
+		System.out.println("actPoNetAmtValue:" + actPoNetAmtValue + ", expNetAmount: " + expNetAmount);
+
 	}
 
-	
-	
-	@Test(enabled = false,description = "Test case to validate the Unique PO Numbers generation.")
+	@Test(enabled = false, description = "Test case to validate the Unique PO Numbers generation.")
 	public void validateUniquePONoGeneration() {
 		logger.info("called validateUniquePONoGeneration method in PurchaseOrderTest");
 		String poNo1 = poFlow.creatingPurchaseOrder();
@@ -208,16 +202,11 @@ public class PurchaseOrderTest extends SetUp {
 		softAssert.assertAll();
 	}
 
-	
-	
-	@Test(enabled = false,description = "Verify supplier details are fetched correctly from Party Master into Purchase Order form")
+	@Test(enabled = false, description = "Verify supplier details are fetched correctly from Party Master into Purchase Order form")
 	public void verifyPartyDetailsFetchedCorrectlyInPO() {
 		logger.info("Starting supplier mapping validation test");
-
 		ExcelDataMappingUtil excelUtility = new ExcelDataMappingUtil();
-
 		Map<String, String> testData = excelUtility.getTestData("Sheet1", "TC_PO_01");
-
 		PartyMasterDTO expectedParty = new PartyMasterDTO();
 
 		expectedParty.setPartyName(testData.get("PartyName"));
@@ -256,13 +245,11 @@ public class PurchaseOrderTest extends SetUp {
 				"Incorrect phone populated.");
 
 		softAssert.assertAll();
-
 		logger.info("Supplier mapping validation completed successfully");
 	}
 
-	
-	@Test(enabled = false,description = "Test case to validate the addition of multiple items in a single purchase order.")
-	public void validateMultiItemsAdditionInSinglePO() {		
+	@Test(enabled = false, description = "Test case to validate the addition of multiple items in a single purchase order.")
+	public void validateMultiItemsAdditionInSinglePO() {
 		logger.info("called validateMultiItemsAdditionInSinglePO method in PurchaseOrderTest");
 		poFlow.poflowUptoRateForMultiItems();
 
@@ -275,19 +262,17 @@ public class PurchaseOrderTest extends SetUp {
 
 		logger.info("1. Validate Rows Count");
 		softAssert.assertEquals(actualSize, expectedSize, "Actual and expected added item rows count is not matching.");
-        System.out.println("Expected size: " + expectedSize + ", Actual size: " + actualSize);
-		
-		
+		System.out.println("Expected size: " + expectedSize + ", Actual size: " + actualSize);
+
 		logger.info("2. Validate each item Row Is Displayed");
-		int rowNum=0;
+		int rowNum = 0;
 		for (WebElement row : allItems) {
 			boolean status = row.isDisplayed();
-			
-			softAssert.assertTrue(status,"Row number " +rowNum+ " is not displayed in the grid.");
-			System.out.println("Row " + rowNum + "Dispaly Status: "+status);
+
+			softAssert.assertTrue(status, "Row number " + rowNum + " is not displayed in the grid.");
+			System.out.println("Row " + rowNum + "Dispaly Status: " + status);
 			rowNum++;
 		}
-		
 
 		logger.info("3. Vallidating Item Names");
 		// Expected item names from properties file
@@ -297,17 +282,17 @@ public class PurchaseOrderTest extends SetUp {
 		List<String> actualItemCodes = new ArrayList<>();
 
 		for (int i = 0; i < actualSize; i++) {
-			WebElement itemCodeCell = driver.findElement(By.xpath("//igx-display-container//igx-grid-cell[@data-rowindex='" + i + "' and @data-visibleindex='0']"));
+			WebElement itemCodeCell = driver.findElement(By.xpath(
+					"//igx-display-container//igx-grid-cell[@data-rowindex='" + i + "' and @data-visibleindex='0']"));
 			actualItemCodes.add(itemCodeCell.getText().trim());
 		}
 
 		logger.info("Expected Item Codes : " + expectedItemCodes);
 		logger.info("Actual Item Codes : " + actualItemCodes);
-		
+
 		System.out.println("Expected Item Codes : " + expectedItemCodes);
 		System.out.println("Actual Item Codes : " + actualItemCodes);
 
-		
 		// Validate all item names
 		softAssert.assertEquals(actualItemCodes, expectedItemCodes, "Actual and expected item codes are not matching.");
 
@@ -321,11 +306,10 @@ public class PurchaseOrderTest extends SetUp {
 		softAssert.assertNotNull(poNo, "PO number is not generated for the purchase order with multiple items.");
 		softAssert.assertAll();
 	}
-	
-	
+
 	// Test to validate that other fields are deactive until series field is
 	// selected.
-	@Test(enabled =false)
+	@Test(enabled = false)
 	public void validateDeactivityOfOtherFields() {
 		WaitHelper.waitForVisible(driver, poPages.getSeriesDropdownField(), 10);
 		boolean selectStatus = driver.findElement(poPages.getSeriesDropdownField()).isSelected();
@@ -341,17 +325,17 @@ public class PurchaseOrderTest extends SetUp {
 //	   }
 		}
 	}
-	
-	// Test to validate the party code is provided in dropdown list or not.
-		@Test(enabled = false)
-		public void validatePartyCodeForPartyDrop() {
-			WaitHelper.waitForClickable(driver, poPages.getSeriesDropdownField(), 10);
-			poPages.selectSeries(propReader.getProperty("SeriesDropOption"));
 
-			WaitHelper.waitForClickable(driver, poPages.getPartyDropdown(), 10);
-			poPages.selectParty(propReader.getProperty("PartyDropOption"));
-			// String partyValue= poPages.getPartyDropdown().getText();
-			// partyValue.trim();
-		}
+	// Test to validate the party code is provided in dropdown list or not.
+	@Test(enabled = false)
+	public void validatePartyCodeForPartyDrop() {
+		WaitHelper.waitForClickable(driver, poPages.getSeriesDropdownField(), 10);
+		poPages.selectSeries(propReader.getProperty("SeriesDropOption"));
+
+		WaitHelper.waitForClickable(driver, poPages.getPartyDropdown(), 10);
+		poPages.selectParty(propReader.getProperty("PartyDropOption"));
+		// String partyValue= poPages.getPartyDropdown().getText();
+		// partyValue.trim();
+	}
 
 }
