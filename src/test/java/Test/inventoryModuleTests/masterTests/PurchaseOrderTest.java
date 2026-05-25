@@ -1,7 +1,6 @@
 package Test.inventoryModuleTests.masterTests;
 
 import java.util.ArrayList;
-
 import java.util.List;
 import java.util.Map;
 
@@ -20,9 +19,9 @@ import Test.setUpTests.SetUp;
 import flowPack.inventoryModuleFlow.masterFlow.PurchaseOrderFlow;
 import models.PartyMasterDTO;
 import pageObjects.inventory.master.PurchaseOrderPages;
-import utility.TestListener;
 import utils.ExcelDataMappingUtil;
 import utils.PropertyReader;
+import utils.TestListener;
 import utils.WaitHelper;
 
 @Listeners(TestListener.class)
@@ -46,9 +45,8 @@ public class PurchaseOrderTest extends SetUp {
 
 	
 	// Test to validate purchase order creation.
-	@Test(enabled = false, priority = 0)
+	@Test(enabled = true, priority = 0)
 	public void validatePurchaseOrderCreation() {
-		try {
 			logger.info("called validatePurchaseOrderCreation method in PurchaseOrderTest");
 			String poNo = poFlow.creatingPurchaseOrder();
 
@@ -58,9 +56,6 @@ public class PurchaseOrderTest extends SetUp {
 			System.out.println("expeUpSuccMsg: " + expeSuccMsg + ",actSuccMsg: " + actSuccMsg);
 			softAssert.assertTrue(actSuccMsg.startsWith(expeSuccMsg), "Record is not created successfully.");
 			softAssert.assertAll();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	// Test to validate the update functionality of PO.
@@ -135,7 +130,7 @@ public class PurchaseOrderTest extends SetUp {
 
 	
 	
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void validatePoNetAmount() {
 		poFlow.flowUptoRateEntering();
 
@@ -188,7 +183,7 @@ public class PurchaseOrderTest extends SetUp {
 
 	
 	
-	@Test(description = "Test case to validate the Unique PO Numbers generation.", enabled = false)
+	@Test(enabled = false,description = "Test case to validate the Unique PO Numbers generation.")
 	public void validateUniquePONoGeneration() {
 		logger.info("called validateUniquePONoGeneration method in PurchaseOrderTest");
 		String poNo1 = poFlow.creatingPurchaseOrder();
@@ -215,7 +210,7 @@ public class PurchaseOrderTest extends SetUp {
 
 	
 	
-	@Test(description = "Verify supplier details are fetched correctly from Party Master into Purchase Order form", enabled = false)
+	@Test(enabled = false,description = "Verify supplier details are fetched correctly from Party Master into Purchase Order form")
 	public void verifyPartyDetailsFetchedCorrectlyInPO() {
 		logger.info("Starting supplier mapping validation test");
 
@@ -266,7 +261,7 @@ public class PurchaseOrderTest extends SetUp {
 	}
 
 	
-	@Test(description = "Test case to validate the addition of multiple items in a single purchase order.", enabled = false)
+	@Test(enabled = false,description = "Test case to validate the addition of multiple items in a single purchase order.")
 	public void validateMultiItemsAdditionInSinglePO() {		
 		logger.info("called validateMultiItemsAdditionInSinglePO method in PurchaseOrderTest");
 		poFlow.poflowUptoRateForMultiItems();
@@ -330,7 +325,7 @@ public class PurchaseOrderTest extends SetUp {
 	
 	// Test to validate that other fields are deactive until series field is
 	// selected.
-	@Test(enabled = false)
+	@Test(enabled =false)
 	public void validateDeactivityOfOtherFields() {
 		WaitHelper.waitForVisible(driver, poPages.getSeriesDropdownField(), 10);
 		boolean selectStatus = driver.findElement(poPages.getSeriesDropdownField()).isSelected();

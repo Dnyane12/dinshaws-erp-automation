@@ -1,44 +1,108 @@
-# Compiled class files
+# ==========================================
+# Java Compiled Files
+# ==========================================
 *.class
 
-test-output/
+# ==========================================
+# Maven / Build
+# ==========================================
 target/
-*.log
+build/
 
+# Maven backup files
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
 
-# Log files
+# ==========================================
+# Logs
+# ==========================================
 logs/
+*.log
 *.log.gz
 
+# ==========================================
+# TestNG / Surefire Reports
+# ==========================================
+test-output/
+surefire-reports/
+emailable-report.html
 
-# Package files
+# ==========================================
+# Allure Reports
+# ==========================================
+allure-results/
+allure-report/
+
+# ==========================================
+# Extent Reports
+# ==========================================
+reports/
+ExtentReports/
+*.html
+
+# ==========================================
+# Selenium Screenshots
+# ==========================================
+screenshots/
+*.png
+*.jpg
+*.jpeg
+
+# ==========================================
+# Package Files
+# ==========================================
 *.jar
 *.war
 *.ear
 
-# Maven / Gradle
-build/
+# ==========================================
+# IDE Files
+# ==========================================
 
-# Eclipse / IntelliJ / VS Code
-*.iml
-.idea/
-.vscode/
+# Eclipse
 .project
 .classpath
 .settings/
+.metadata/
 
+# IntelliJ
+.idea/
+*.iml
+out/
 
-# OS files
+# VS Code
+.vscode/
+
+# ==========================================
+# OS Files
+# ==========================================
 .DS_Store
 Thumbs.db
 
-# Environment variables / secrets
+# ==========================================
+# Environment / Secrets
+# ==========================================
 .env
+*.key
+*.pem
 
+# ==========================================
+# Temporary Files
+# ==========================================
+*.tmp
+*.temp
+*.swp
 
-# Selenium screenshots
-screenshots/
+# ==========================================
+# Driver Executables
+# Ignore only if using WebDriverManager
+# ==========================================
+drivers/*.exe
 
-target/
-allure-results/
-allure-report/
+# ==========================================
+# Jenkins Workspace Files
+# ==========================================
+workspace/

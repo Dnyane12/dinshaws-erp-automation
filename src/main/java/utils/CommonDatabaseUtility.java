@@ -1,7 +1,9 @@
 package utils;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 public class CommonDatabaseUtility {
   // Get single column value
@@ -35,6 +37,40 @@ public class CommonDatabaseUtility {
 	            throw new RuntimeException("Failed to fetch DB row data", e);
 	        }
 	        return result;
+	    }
+	    
+	    
+	    public static List<Map<String, String>> getMultipleRows(String query, Object... params) {
+
+	        List<Map<String, String>> rows = new ArrayList<>();
+
+	        try {
+
+	            ResultSet rs = DatabaseUtility.executeSelectQuery(query, params);
+
+	            int columnCount = rs.getMetaData().getColumnCount();
+
+	            while (rs.next()) {
+
+	                Map<String, String> row = new HashMap<>();
+
+	                for (int i = 1; i <= columnCount; i++) {
+
+	                    row.put(
+	                            rs.getMetaData().getColumnLabel(i),
+	                            rs.getString(i)
+	                    );
+	                }
+
+	                rows.add(row);
+	            }
+
+	        } catch (SQLException e) {
+
+	            throw new RuntimeException("Failed to fetch multiple DB rows", e);
+	        }
+
+	        return rows;
 	    }
 }
 

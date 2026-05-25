@@ -1,5 +1,8 @@
 package pageObjects.inventory.transaction;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
@@ -10,35 +13,39 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import models.GrnItemData;
 import utils.SimpleDropUtil;
 import utils.WaitHelper;
 import utils.WaitUtilityDuplicate;
 
 public class GoodReceiptNotePage {
 	WebDriver driver;
-	private static Logger logger=LogManager.getLogger(GoodReceiptNotePage.class);
+	private static Logger logger = LogManager.getLogger(GoodReceiptNotePage.class);
 
 	public GoodReceiptNotePage(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 	}
 
-	@FindBy(xpath="//igx-nav-drawer//span[contains(@class, 'menu-l1-name') and normalize-space()='Stores']")
+	@FindBy(xpath = "//igx-nav-drawer//span[contains(@class, 'menu-l1-name') and normalize-space()='Stores']")
 	private WebElement storeLink;
 
-	By goodReceiptNoteFormLink =By.xpath("(//span[contains(normalize-space(.),'Good Receipt Note') and contains(@class,'fs-12')])[1]");
+	By goodReceiptNoteFormLink = By.xpath("(//span[contains(normalize-space(.),'Good Receipt Note') and contains(@class,'fs-12')])[1]");
 
-	@FindBy(xpath="//div//button[contains(normalize-space(.),'Create New') and contains(@class,'icon-button')]")
+	@FindBy(xpath = "//div//button[contains(normalize-space(.),'Create New') and contains(@class,'icon-button')]")
 	private WebElement createNewButton;
 
-	By vendorDropField=By.xpath("(//label[normalize-space(text()='Vendor')]/following::input[@class='igx-input-group__input'])[6]");
+	By vendorDropField = By.xpath("(//label[normalize-space(text()='Vendor')]/following::input[@class='igx-input-group__input'])[6]");
 
-	By vendorDropOptField= By.xpath("//div//span[contains(normalize-space(text()),'++')]");
-	
+	By vendorDropOptField = By.xpath("//div//span[contains(normalize-space(text()),'++')]");
+
 	@FindBy(xpath = "(//label[normalize-space(text())='PO No.']/following::igx-icon[normalize-space(text())='expand_more'])[1]")
 	private WebElement poNoDropList;
+	
+	@FindBy(xpath = "(//label[normalize-space(text())='PO No.']/following::input[@role='combobox'])[1]")
+	private WebElement poDropdownField;
 
-	By poNoSearchPopup =By.xpath("//input[@name='searchInput']");
+	By poNoSearchPopup = By.xpath("//input[@name='searchInput']");
 
 	@FindBy(xpath = "(//igx-checkbox[contains(@id,'igx-checkbox')])[3]")
 	private WebElement poOptionCheckbox;
@@ -46,18 +53,17 @@ public class GoodReceiptNotePage {
 	@FindBy(xpath = "//button[normalize-space(text())='Fetch Data' and @id='l_grn_create_fetch_data-width-selector']")
 	private WebElement fetchDataButton;
 
-	@FindBy(xpath = "//igx-grid//igx-grid-row")
-	private WebElement grid;
+	By grnInfoTab = By.xpath("//span//app-g-label[normalize-space(text())='GRN Info']");
 
-	By grnInfoTab=By.xpath("//span//app-g-label[normalize-space(text())='GRN Info']");
-
-	
 	@FindBy(xpath = "(//label[normalize-space(text())='Transporter Mode']/following::igx-icon[normalize-space(text())='expand_more'])[1]")
 	private WebElement transporterMode;
-	
-	@FindBy(xpath = "(//igx-grid-row[@role='row'])[1]")
-	private WebElement gridRow;
 
+	@FindBy(xpath = "//igx-grid-row[.//igx-grid-cell[contains(@id,'l_inv_grnpo_igx_grid_')]]")
+	private List<WebElement> gridRows;
+
+	@FindBy(xpath = "//igx-grid")
+	private WebElement grid;
+	
 	@FindBy(xpath = "//input[@id='l_ingh_lr_no']")
 	private WebElement lrNoField;
 
@@ -114,8 +120,8 @@ public class GoodReceiptNotePage {
 	@FindBy(xpath = "//div[@class='igx-snackbar__message' and contains(text(),'GRN Created successfully')]")
 	private WebElement submitSuccMsg;
 
-	@FindBy(xpath = "//span[normalize-space(text())='Good Receipt Note' and contains(@class,'fs-18')]")
-	private WebElement listingPageHeader;
+//	@FindBy(xpath = "//span[normalize-space(text())='Good Receipt Note' and contains(@class,'fs-18')]")
+//	private WebElement listingPageHeader;
 
 	@FindBy(xpath = "//label[normalize-space()='Vendor']/ancestor::igx-input-group//input[@role='combobox']")
 	private WebElement selVendorField;
@@ -138,9 +144,15 @@ public class GoodReceiptNotePage {
 	By listpageHeader = By
 			.xpath("//span[contains(@class,'fs-18') and contains(normalize-space(),'Good Receipt Note')]");
 
-	@FindBy(xpath="//div[contains(normalize-space(text()),'GRN Created successfully ID:') and @class='igx-snackbar__message']")
+	@FindBy(xpath = "//div[contains(normalize-space(text()),'GRN Created successfully ID:') and @class='igx-snackbar__message']")
 	private WebElement succMsg;
-	
+
+	@FindBy(xpath = "//div[@class='display-cell']//span[normalize-space(text())='Good Receipt Note']")
+	private WebElement grnTitleInGrnForm;
+
+	@FindBy(xpath = "//igx-display-container//igx-grid-row[@role='row']")
+	private WebElement gridRow1;
+
 	
 	
 	
@@ -157,15 +169,14 @@ public class GoodReceiptNotePage {
 	
 	
 //Action methods
-	
+
 	public String extractGrnNo() {
-		WaitHelper.waitForVisible(driver,succMsg, 20);
-		String successMessage= succMsg.getText();
-		System.out.print("successMessage:"+successMessage);
+		WaitHelper.waitForVisible(driver, succMsg, 20);
+		String successMessage = succMsg.getText();
+		System.out.print("successMessage:" + successMessage);
 		return successMessage;
-		}
-	
-	
+	}
+
 	public WebElement getRemarkField() {
 		return remarkField;
 	}
@@ -198,26 +209,26 @@ public class GoodReceiptNotePage {
 
 	public void clickCreateNewButton() {
 		WaitHelper.waitForInvisibilityOfElementLocated(driver, dotSpinner, 10);
-		JavascriptExecutor js=  (JavascriptExecutor)driver;
-		
-        WaitHelper.waitForClickable(driver, createNewButton, 10);
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+
+		WaitHelper.waitForClickable(driver, createNewButton, 10);
 		js.executeScript("arguments[0].scrollIntoView(true);", createNewButton);
 		js.executeScript("arguments[0].click();", createNewButton);
-		 //WaitHelper.waitForRefreshAndClick(driver, createNewButton, 20);
+		// WaitHelper.waitForRefreshAndClick(driver, createNewButton, 20);
 	}
 
 	public void selectVendor(String vendorDropOption) {
-		By vendorDropOptField= By.xpath("//div//span[contains(normalize-space(text()),'"+vendorDropOption+"')]");
-		SimpleDropUtil.selectDropOption(driver,vendorDropField, vendorDropOptField,vendorDropOption);
+		By vendorDropOptField = By.xpath("//div//span[contains(normalize-space(text()),'" + vendorDropOption + "')]");
+		SimpleDropUtil.selectDropOption(driver, vendorDropField, vendorDropOptField, vendorDropOption);
 	}
 
 	public void enterPoNoToSearch(String poNoDropOption) {
 		WaitHelper.waitForClickable(driver, poNoDropList, 10);
 		poNoDropList.click();
-		
+
 		WaitHelper.waitForClickable(driver, poNoSearchPopup, 10);
 		WaitHelper.waitForRefreshAndClick(driver, poNoSearchPopup, 10);
-		
+
 		driver.findElement(poNoSearchPopup).sendKeys(poNoDropOption);
 		WaitHelper.waitForClickable(driver, poOptionCheckbox, 10);
 		poOptionCheckbox.click();
@@ -228,7 +239,7 @@ public class GoodReceiptNotePage {
 		fetchDataButton.click();
 	}
 
-	public void clickGrnInfoTab() {	
+	public void clickGrnInfoTab() {
 		WaitHelper.waitForClickable(driver, grnInfoTab, 20);
 		WaitHelper.waitForRefreshAndClick(driver, grnInfoTab, 20);
 	}
@@ -270,16 +281,17 @@ public class GoodReceiptNotePage {
 	}
 
 	public void clickEditIcon(int itemRowIndex) {
-		By editIconBy= By.xpath("(//igx-icon[normalize-space(text())='edit' and contains(@class,'material-icons')])["+itemRowIndex+"]");	
+		By editIconBy = By.xpath("(//igx-icon[normalize-space(text())='edit' and contains(@class,'material-icons')])["
+				+ itemRowIndex + "]");
 		WaitHelper.waitForClickable(driver, editIconBy, 10);
 		driver.findElement(editIconBy).click();
 	}
 
-	public void clickEditIcon() {		
+	public void clickEditIcon() {
 		WaitHelper.waitForClickable(driver, editIcon, 10);
 		editIcon.click();
 	}
-	
+
 	public void enterInvoiceQuantity(String invoiceQty) {
 		WaitHelper.waitForClickable(driver, invoiceQtyField, 10);
 		invoiceQtyField.click();
@@ -309,24 +321,24 @@ public class GoodReceiptNotePage {
 		updateButton.click();
 	}
 
-	public void extractTotalNetAmount() {		
-			// Step 1: Wait for label to appear
-		    WaitHelper.waitForTextToBePresentInElement(driver, netvalueWholeText, "Total Net Value:", 30);
+	public void extractTotalNetAmount() {
+		// Step 1: Wait for label to appear
+		WaitHelper.waitForTextToBePresentInElement(driver, netvalueWholeText, "Total Net Value:", 30);
 
-		    // Step 2: Poll until a valid numeric value appears after the colon
-		    WaitHelper.normalWait(driver,60);
-		    		
-		    String netAmount =WaitHelper.waitForValidNumericValueAfterColon(driver, netvalueWholeText,30);
-			
-			// logger.info("Extracted Net Amount: {}", netAmount);
-			System.out.println("netAmount in page class:" + netAmount);
+		// Step 2: Poll until a valid numeric value appears after the colon
+		WaitHelper.normalWait(driver, 60);
 
-			WaitHelper.waitForRefreshAndClick(driver, grnInfoTab, 30);
-			WaitHelper.waitForClickable(driver, invoiceValueGrnInfoTab, 10);
-			invoiceValueGrnInfoTab.click();
-			invoiceValueGrnInfoTab.sendKeys(netAmount);
-			System.out.println("netAmount:" + netAmount);
-		
+		String netAmount = WaitHelper.waitForValidNumericValueAfterColon(driver, netvalueWholeText, 30);
+
+		// logger.info("Extracted Net Amount: {}", netAmount);
+		System.out.println("netAmount in page class:" + netAmount);
+
+		WaitHelper.waitForRefreshAndClick(driver, grnInfoTab, 30);
+		WaitHelper.waitForClickable(driver, invoiceValueGrnInfoTab, 10);
+		invoiceValueGrnInfoTab.click();
+		invoiceValueGrnInfoTab.sendKeys(netAmount);
+		System.out.println("netAmount:" + netAmount);
+
 	}
 
 	public String extractGrnNoCreated() {
@@ -334,23 +346,6 @@ public class GoodReceiptNotePage {
 		String grnNo = listingGrnNo.getText();
 		System.out.println("grnNo:" + grnNo);
 		return grnNo;
-	}
-
-	public String extractListingPageHeading() {
-		return listingPageHeader.getText().trim();
-	}
-
-//public void enterInvoiceValueGrnInfoTab() {
-	// String netAmount =extractTotalNetAmount();
-
-//}
-
-	public WebElement getListingPageHeader() {
-		return listingPageHeader;
-	}
-
-	public void setListingPageHeader(WebElement listingPageHeader) {
-		this.listingPageHeader = listingPageHeader;
 	}
 
 	public void clickSubmitButton() {
@@ -373,9 +368,113 @@ public class GoodReceiptNotePage {
 		confOkButton.click();
 	}
 
+	public String getGRNFormTitle() {
+		WaitHelper.waitForVisible(driver, grnTitleInGrnForm, 10);
+		String grnFormTitle = grnTitleInGrnForm.getText();
+		System.out.println("grnFormTitle:" + grnFormTitle);
+		return grnFormTitle;
+	}
+
+	public void extractPoQtyFromGrid() {
+		WaitHelper.waitForVisible(driver, gridRow1, 10);
+		String poQty = gridRow1.findElement(By.xpath("//div//span[contains(normalize-space(text()),'PO Qty.:')]"))
+				.getText();
+		System.out.println("poQty:" + poQty);
+	}
+
+		
+	
+	// Method to extract item details from the GRN PO  tab
+	// Method to extract item details from the GRN PO  tab
+	public List<GrnItemData> getGrnItemDetails() {
+		WaitHelper.waitForVisibilityOfAllElements(driver, gridRows, 10);
+		List<GrnItemData> grnItems = new ArrayList<>();
+
+		if (gridRows == null || gridRows.isEmpty()) {
+			return grnItems;
+		}
+
+		for (WebElement row : gridRows) {
+
+			String itemName = safeGetCellText(row, "l_inv_grnpo_igx_grid_pod_item_name");
+			String quantity = safeGetCellText(row, "l_inv_grnpo_igx_grid_pod_qty");
+			String rate = safeGetCellText(row, "l_inv_grnpo_igx_grid_pod_net_rate");
+			String itemHsn = safeGetCellText(row, "l_inv_grnpo_igx_grid_item_hsn_code_hsnm");
+			String uom = safeGetCellText(row, "l_inv_grnpo_igx_grid_pod_po_uom_unit");
+			String itemLocation = safeGetCellText(row, "l_inv_grnpo_igx_grid_stor_substore_description");
+
+			// Debug purpose
+			System.out.println("Item Name : " + itemName + " | Qty : " + quantity + " | Rate : " + rate + " | HSN : "
+					+ itemHsn + " | UOM : " + uom + " | Location : " + itemLocation);
+
+			// Use constructor that exists in GrnItemData
+			GrnItemData itemData = new GrnItemData(itemName, quantity, rate, itemHsn, itemLocation, uom);
+			grnItems.add(itemData);
+		}
+		return grnItems;
+	}
+
+	
+	// Helper to safely read a cell value (returns empty string if not present)
+	private String safeGetCellText(WebElement row, String columnName) {
+		try {
+			return getCellText(row, columnName);
+		} catch (Exception e) {
+			// element/cell might not be present for this row; return empty string
+			return "";
+		}
+	}
+
+	private String getCellText(WebElement row, String columnName) {
+		return row.findElement(By.xpath(".//igx-grid-cell[contains(@aria-describedby,'" + columnName + "')]")).getText().trim();
+	}
+		
+	public String extractSelPoNo() {
+		WaitHelper.waitForClickable(driver, selPoNoField, 10);
+		String selPoNo = selPoNoField.getAttribute("value");
+		System.out.println("selPoNo: " + selPoNo);
+		return selPoNo;
+	}
+	
+	public String extractSelVendor() {
+		WaitHelper.waitForClickable(driver, selVendorField, 10);
+		String selVendor = selVendorField.getAttribute("value");
+		System.out.println("selVendor: " + selVendor);
+		return selVendor;
+	}
+	
+	public void clickBackButton() {
+		WaitHelper.waitForClickable(driver, backButton, 10);
+		backButton.click();
+	}
+	
+	public boolean isGrnFormDisplayed() {
+		try {
+			WaitHelper.waitForVisible(driver, grnTitleInGrnForm, 10);
+			return grnTitleInGrnForm.isDisplayed();
+		} catch (Exception e) {
+			return false;
+		}
+	}
 	
 	
+	public boolean isGRNListingGridDisplayed() {
+		try {
+			WaitHelper.waitForVisible(driver, grid, 10);
+			return grid.isDisplayed();
+		} catch (Exception e) {
+			return false;
+		}
+	}
 	
+	
+	public boolean isFieldHighlighted(WebElement element) {
+	    return Boolean.parseBoolean(element.getAttribute("aria-invalid"));
+	}
+	
+	public boolean isSubmitButtonEnabled() {
+	    return submitButton.isEnabled();
+	}
 	
 	
 	
@@ -388,7 +487,6 @@ public class GoodReceiptNotePage {
 	
 	
 //Getter & Setters
-	
 
 	public WebElement getStoreLink() {
 		return storeLink;
@@ -458,7 +556,6 @@ public class GoodReceiptNotePage {
 		return grnInfoTab;
 	}
 
-
 	public WebElement getTransporterMode() {
 		return transporterMode;
 	}
@@ -471,144 +568,72 @@ public class GoodReceiptNotePage {
 		return lrNoField;
 	}
 
-	public void setLrNo(WebElement lrNoField) {
-		this.lrNoField = lrNoField;
-	}
-
 	public WebElement getLrDate() {
 		return lrDateField;
-	}
-
-	public void setLrDate(WebElement lrDateField) {
-		this.lrDateField = lrDateField;
 	}
 
 	public WebElement getInvoiceNoField() {
 		return invoiceNoField;
 	}
 
-	public void setInvoiceNo(WebElement invoiceNoField) {
-		this.invoiceNoField = invoiceNoField;
-	}
-
 	public WebElement getInvoiceDate() {
 		return invoiceDateField;
-	}
-
-	public void setInvoiceDate(WebElement invoiceDateField) {
-		this.invoiceDateField = invoiceDateField;
 	}
 
 	public WebElement getGrnDetailsTab() {
 		return grnDetailsTab;
 	}
 
-	public void setGrnDetailsTab(WebElement grnDetailsTab) {
-		this.grnDetailsTab = grnDetailsTab;
-	}
-
 	public WebElement getEditIcon() {
 		return editIcon;
-	}
-
-	public void setEditIcon(WebElement editIcon) {
-		this.editIcon = editIcon;
 	}
 
 	public WebElement getGrnPoTab() {
 		return grnPoTab;
 	}
 
-	public void setGrnPoTab(WebElement grnPoTab) {
-		this.grnPoTab = grnPoTab;
-	}
-
 	public WebElement getInvoiceQty() {
 		return invoiceQtyField;
-	}
-
-	public void setInvoiceQty(WebElement invoiceQtyField) {
-		this.invoiceQtyField = invoiceQtyField;
 	}
 
 	public WebElement getReceivedQty() {
 		return receivedQtyField;
 	}
 
-	public void setReceivedQty(WebElement receivedQtyField) {
-		this.receivedQtyField = receivedQtyField;
-	}
-
 	public WebElement getAcceptedQty() {
 		return acceptedQtyField;
-	}
-
-	public void setAcceptedQty(WebElement acceptedQtyField) {
-		this.acceptedQtyField = acceptedQtyField;
 	}
 
 	public WebElement getUpdateButton() {
 		return updateButton;
 	}
 
-	public void setUpdateButton(WebElement updateButton) {
-		this.updateButton = updateButton;
-	}
-
 	public WebElement getNetvalueWholeText() {
 		return netvalueWholeText;
-	}
-
-	public void setNetvalueWholeText(WebElement netvalueWholeText) {
-		this.netvalueWholeText = netvalueWholeText;
 	}
 
 	public WebElement getInvoiceValueGrnInfoTab() {
 		return invoiceValueGrnInfoTab;
 	}
 
-	public void setInvoiceValueGrnInfoTab(WebElement invoiceValueGrnInfoTab) {
-		this.invoiceValueGrnInfoTab = invoiceValueGrnInfoTab;
-	}
-
 	public WebElement getSubmitButton() {
 		return submitButton;
-	}
-
-	public void setSubmitButton(WebElement submitButton) {
-		this.submitButton = submitButton;
 	}
 
 	public WebElement getListingGrnNo() {
 		return listingGrnNo;
 	}
 
-	public void setListingGrnNo(WebElement listingGrnNo) {
-		this.listingGrnNo = listingGrnNo;
-	}
-
 	public WebElement getListingTitle() {
 		return listingTitle;
-	}
-
-	public void setListingTitle(WebElement listingTitle) {
-		this.listingTitle = listingTitle;
 	}
 
 	public WebElement getSubmitSuccMsg() {
 		return submitSuccMsg;
 	}
 
-	public void setSubmitSuccMsg(WebElement submitSuccMsg) {
-		this.submitSuccMsg = submitSuccMsg;
-	}
-
 	public WebElement getSelVendorField() {
 		return selVendorField;
-	}
-
-	public void setSelVendorField(WebElement selVendorField) {
-		this.selVendorField = selVendorField;
 	}
 
 	public WebElement getSelPoNoField() {
@@ -619,24 +644,12 @@ public class GoodReceiptNotePage {
 		return resetButton;
 	}
 
-	public void setResetButton(WebElement resetButton) {
-		this.resetButton = resetButton;
-	}
-
 	public WebElement getConfirmationPopup() {
 		return confirmationPopup;
 	}
 
-	public void setConfirmationPopup(WebElement confirmationPopup) {
-		this.confirmationPopup = confirmationPopup;
-	}
-
 	public WebElement getConfOkButton() {
 		return confOkButton;
-	}
-
-	public void setConfOkButton(WebElement confOkButton) {
-		this.confOkButton = confOkButton;
 	}
 
 	public WebElement getGrid() {
@@ -655,10 +668,14 @@ public class GoodReceiptNotePage {
 		return succMsg;
 	}
 
-
 	public WebElement getGridRow() {
-		return gridRow;
+		return gridRow1;
 	}
 
+	public WebElement getPoDropdownField() {
+		return poDropdownField;
+	}
+
+	
 	
 }

@@ -21,8 +21,6 @@ import com.aventstack.extentreports.Status;
 import utils.DriverProvider;
 import utils.ExtentReportManager;
 
-
-
 //import ;  // Assuming BaseTest contains WebDriver reference
 
 public class TestListener implements ITestListener {

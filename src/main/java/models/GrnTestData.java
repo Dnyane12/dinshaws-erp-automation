@@ -2,185 +2,230 @@ package models;
 
 public class GrnTestData {
 
+	// Vendor
+	private String VendorDropLabel;
+	private String vendorDropOption;
+
+	// PO No
+	private String poNoDropLabel;
+	private String poNoDropOption;
+
+	// Transporter Mode
+	private String transporterModeLabel;
+	private String transporterModeOption;
+
+	// LR Details
+	private String lrNo;
+	private String lrDate;
+
+	// Invoice Details
+	private String invoiceDate;
+	private String InvoiceNo;
+
+	// Quantity Details
+	private String invoiceQty;
+	private String receivedQty;
+	private String acceptedQty;
+
+	// remark
+	private String remark;
+
+	private String poNumber;
+
+	private String expectedItemName;
 	
-	 // Vendor
-    private String VendorDropLabel;
-    private String vendorDropOption;
+	private String expectedQty;
+	
+	private String expectedRate;
+	
+	private String expectedTax;
+	
+	private String expectedUom;
+	
+	
+	
+	
+	
+	
 
-    // PO No
-    private String poNoDropLabel;
-    private String poNoDropOption;
+	
+	
+	// =========================
+	// GETTERS AND SETTERS
+	// =========================
 
-    // Transporter Mode
-    private String transporterModeLabel;
-    private String transporterModeOption;
+	public String getVendorDropLabel() {
+		return VendorDropLabel;
+	}
 
-    // LR Details
-    private String lrNo;
-    private String lrDate;
+	public void setVendorDropLabel(String vendorDropLabel) {
+		VendorDropLabel = vendorDropLabel;
+	}
 
-    // Invoice Details
-    private String invoiceDate;
-    private String InvoiceNo;
+	public String getVendorDropOption() {
+		return vendorDropOption;
+	}
 
-    // Quantity Details
-    private String invoiceQty;
-    private String receivedQty;
-    private String acceptedQty;
+	public void setVendorDropOption(String vendorDropOption) {
+		this.vendorDropOption = vendorDropOption;
+	}
 
+	public String getPoNoDropLabel() {
+		return poNoDropLabel;
+	}
 
-    private String remark;
-    // =========================
-    // GETTERS AND SETTERS
-    // =========================
+	public void setPoNoDropLabel(String poNoDropLabel) {
+		this.poNoDropLabel = poNoDropLabel;
+	}
 
-    public String getVendorDropLabel() {
-        return VendorDropLabel;
-    }
+	public String getPoNoDropOption() {
+		return poNoDropOption;
+	}
 
-    public void setVendorDropLabel(String vendorDropLabel) {
-        VendorDropLabel = vendorDropLabel;
-    }
+	public void setPoNoDropOption(String poNoDropOption) {
+		this.poNoDropOption = poNoDropOption;
+	}
 
-    public String getVendorDropOption() {
-        return vendorDropOption;
-    }
+	public String getTransporterModeLabel() {
+		return transporterModeLabel;
+	}
 
-    public void setVendorDropOption(String vendorDropOption) {
-        this.vendorDropOption = vendorDropOption;
-    }
+	public void setTransporterModeLabel(String transporterModeLabel) {
+		this.transporterModeLabel = transporterModeLabel;
+	}
 
-    public String getPoNoDropLabel() {
-        return poNoDropLabel;
-    }
+	public String getTransporterModeOption() {
+		return transporterModeOption;
+	}
 
-    public void setPoNoDropLabel(String poNoDropLabel) {
-        this.poNoDropLabel = poNoDropLabel;
-    }
+	public void setTransporterModeOption(String transporterModeOption) {
+		this.transporterModeOption = transporterModeOption;
+	}
 
-    public String getPoNoDropOption() {
-        return poNoDropOption;
-    }
+	public String getLrNo() {
+		return lrNo;
+	}
 
-    public void setPoNoDropOption(String poNoDropOption) {
-        this.poNoDropOption = poNoDropOption;
-    }
+	public void setLrNo(String lrNo) {
+		this.lrNo = lrNo;
+	}
 
-    public String getTransporterModeLabel() {
-        return transporterModeLabel;
-    }
+	public String getLrDate() {
+		return lrDate;
+	}
 
-    public void setTransporterModeLabel(String transporterModeLabel) {
-        this.transporterModeLabel = transporterModeLabel;
-    }
+	public void setLrDate(String lrDate) {
+		this.lrDate = lrDate;
+	}
 
-    public String getTransporterModeOption() {
-        return transporterModeOption;
-    }
+	public String getInvoiceDate() {
+		return invoiceDate;
+	}
 
-    public void setTransporterModeOption(String transporterModeOption) {
-        this.transporterModeOption = transporterModeOption;
-    }
+	public void setInvoiceDate(String invoiceDate) {
+		this.invoiceDate = invoiceDate;
+	}
 
-    public String getLrNo() {
-        return lrNo;
-    }
+	public String getInvoiceNo() {
+		return InvoiceNo;
+	}
 
-    public void setLrNo(String lrNo) {
-        this.lrNo = lrNo;
-    }
+	public void setInvoiceNo(String invoiceNo) {
+		InvoiceNo = invoiceNo;
+	}
 
-    public String getLrDate() {
-        return lrDate;
-    }
+	public String getInvoiceQty() {
+		return invoiceQty;
+	}
 
-    public void setLrDate(String lrDate) {
-        this.lrDate = lrDate;
-    }
+	public void setInvoiceQty(String invoiceQty) {
+		this.invoiceQty = invoiceQty;
+	}
 
-    public String getInvoiceDate() {
-        return invoiceDate;
-    }
+	public String getReceivedQty() {
+		return receivedQty;
+	}
 
-    public void setInvoiceDate(String invoiceDate) {
-        this.invoiceDate = invoiceDate;
-    }
+	public void setReceivedQty(String receivedQty) {
+		this.receivedQty = receivedQty;
+	}
 
-    public String getInvoiceNo() {
-        return InvoiceNo;
-    }
+	public String getAcceptedQty() {
+		return acceptedQty;
+	}
 
-    public void setInvoiceNo(String invoiceNo) {
-        InvoiceNo = invoiceNo;
-    }
+	public void setAcceptedQty(String acceptedQty) {
+		this.acceptedQty = acceptedQty;
+	}
 
-    public String getInvoiceQty() {
-        return invoiceQty;
-    }
-
-    public void setInvoiceQty(String invoiceQty) {
-        this.invoiceQty = invoiceQty;
-    }
-
-    public String getReceivedQty() {
-        return receivedQty;
-    }
-
-    public void setReceivedQty(String receivedQty) {
-        this.receivedQty = receivedQty;
-    }
-
-    public String getAcceptedQty() {
-        return acceptedQty;
-    }
-
-    public void setAcceptedQty(String acceptedQty) {
-        this.acceptedQty = acceptedQty;
-    }
-
-    public String getRemark() {
+	public String getRemark() {
 		return remark;
 	}
 
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	
-	
 
-	@Override
-    public String toString() {
-        return "GrnTestData{" +
-                "VendorDropLabel='" + VendorDropLabel + '\'' +
-                ", vendorDropOption='" + vendorDropOption + '\'' +
-                ", poNoDropLabel='" + poNoDropLabel + '\'' +
-                ", poNoDropOption='" + poNoDropOption + '\'' +
-                ", transporterModeLabel='" + transporterModeLabel + '\'' +
-                ", transporterModeOption='" + transporterModeOption + '\'' +
-                ", lrNo='" + lrNo + '\'' +
-                ", lrDate='" + lrDate + '\'' +
-                ", invoiceDate='" + invoiceDate + '\'' +
-                ", InvoiceNo='" + InvoiceNo + '\'' +
-                ", invoiceQty='" + invoiceQty + '\'' +
-                ", receivedQty='" + receivedQty + '\'' +
-                ", acceptedQty='" + acceptedQty + '\'' +
-                '}';
+	
+	public String getPoNumber() {
+        return poNumber;
+    }
+
+    public void setPoNumber(String poNumber) {
+        this.poNumber = poNumber;
+    }
+
+    public String getExpectedItemName() {
+        return expectedItemName;
+    }
+
+    public void setExpectedItemName(String expectedItemName) {
+        this.expectedItemName = expectedItemName;
+    }
+
+    public String getExpectedQty() {
+        return expectedQty;
+    }
+
+    public void setExpectedQty(String expectedQty) {
+        this.expectedQty = expectedQty;
+    }
+
+    public String getExpectedRate() {
+        return expectedRate;
+    }
+
+    public void setExpectedRate(String expectedRate) {
+        this.expectedRate = expectedRate;
+    }
+
+    public String getExpectedTax() {
+        return expectedTax;
+    }
+
+    public void setExpectedTax(String expectedTax) {
+        this.expectedTax = expectedTax;
+    }
+
+    public String getExpectedUom() {
+        return expectedUom;
+    }
+
+    public void setExpectedUom(String expectedUom) {
+        this.expectedUom = expectedUom;
     }
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@Override
+	public String toString() {
+		return "GrnTestData{" + "VendorDropLabel='" + VendorDropLabel + '\'' + ", vendorDropOption='" + vendorDropOption
+				+ '\'' + ", poNoDropLabel='" + poNoDropLabel + '\'' + ", poNoDropOption='" + poNoDropOption + '\''
+				+ ", transporterModeLabel='" + transporterModeLabel + '\'' + ", transporterModeOption='"
+				+ transporterModeOption + '\'' + ", lrNo='" + lrNo + '\'' + ", lrDate='" + lrDate + '\''
+				+ ", invoiceDate='" + invoiceDate + '\'' + ", InvoiceNo='" + InvoiceNo + '\'' + ", invoiceQty='"
+				+ invoiceQty + '\'' + ", receivedQty='" + receivedQty + '\'' + ", acceptedQty='" + acceptedQty + '\''
+				+ '}';
+	}
 
-    
-    
-    
-	
 //    private String runMode;
 //    private String testCaseName;
 //    private String vendor;
