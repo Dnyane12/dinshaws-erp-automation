@@ -96,7 +96,7 @@ public class PurchaseOrderFlow {
 
 		poPages.clickPaymentTermAddBtn();
 
-		//poPages.clickSubmitBtn();
+		poPages.clickSubmitBtn();
 
 		return poPages.getPoNo();
 	}

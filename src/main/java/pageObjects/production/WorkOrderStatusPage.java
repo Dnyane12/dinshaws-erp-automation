@@ -69,10 +69,6 @@ public WorkOrderStatusPage(WebDriver driver) {
 	public void clickWorkOrderStatusMenu() {
 		WaitHelper.waitForClickable(driver, workOrderStatusMenu, 10);
 		workOrderStatusMenu.click();
-	}
-	
-	
-	public void clickConfOkBtn() {
 		WaitHelper.waitForVisible(driver, confPopup, 20);		
 		WaitHelper.waitForClickable(driver, confOkBtn, 10);
 		confOkBtn.click();

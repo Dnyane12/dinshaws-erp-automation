@@ -1,42 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<suite name="Dinshaws Regression Test Suite" parallel="none"
-	verbose="2">
-	
+<suite name="Dinshaws Regression Test Suite" parallel="none" verbose="2"> 
+
 	<listeners> 
 	<listener class-name="utils.TestListener"/> 
-	</listeners>
+	</listeners> 
+	
+	<!--test name="Sales Flow Only"> 
+	<groups>
+	 <run> 
+	 <include name="sales-flow" /> 
+	 </run> 
+	</groups> 
+	<classes> 
+	<class name="Test.flowWiseTest.SalesFlowTests"/>
+	</classes> 
+	</test -->
 
-	<test name="Sales Flow Only">
-		<groups>
-			<run>
-				<include name="sales-flow" />
-			</run>
-		</groups>
-		<classes>
-			<class name="Test.flowWiseTest.SalesFlowTests" />
-		</classes>
-	</test>
+
+<!-- test name="Inventory Flow Only">
+	<groups>
+		<run>
+			<include name="Inventory-flow" />
+		</run>
+	</groups>
+	<classes>
+		<class name="Test.flowWiseTest.InventoryFlowTests" />
+	</classes>
+</test -->
 
 
-	<!--test name="Inventory Flow Only"> <groups> <run> <include name="Inventory-flow"/> 
-		</run> 
-		</groups> 
-		<classes> 
-		<class name="Test.flowWiseTest.InventoryFlowTests"/> 
-		</classes>
-    </test-->
+<test name="Production flow Only">
+	<groups>
+		<run>
+			<include name="Production module-flow" />
+		</run>
+	</groups>
+	<classes>
+		<class name="Test.flowWiseTest.ProductionFlowTests" />
+	</classes>
+</test>
 
-	<!--test name="Production flow Only">
-		<groups>
-			<run>
-				<include name="Production module-flow" />
-			</run>
-		</groups>
-		<classes>
-			<class name="Test.flowWiseTest.ProductionFlowTests" />
-		</classes>
-	</test-->
-		
 </suite>
 
 

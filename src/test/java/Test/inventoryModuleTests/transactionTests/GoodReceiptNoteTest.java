@@ -337,5 +337,24 @@ public class GoodReceiptNoteTest extends SetUp {
         softAssert.assertTrue(isHighlighted,fieldName + " field is not highlighted as mandatory");
     }
 	
-	
+    
+    @Test(description = "Test to extract PO quantity from listing page grid", enabled =true)
+    public void extractGRNNoFromListingPage() throws InterruptedException {
+    WaitHelper.waitForInvisibilityOfElementLocated(driver,grnPage.getDotSpinner(), 10);
+	WaitHelper.waitForVisible(driver, grnPage.getGrid(), 10);
+	//grnPage.extractGRNNoFromGrid();
+	List<String> grnNos= grnPage.extractAllGRNNumbers();
+	System.out.println("Extracted GRN Numbers from listing page:"+ grnNos);
+     }
+    
+    
+    @Test(description = "Test to search GRN No on listing page", enabled = true)
+    public void searchGRNNoOnListingPage() throws InterruptedException {
+		WaitHelper.waitForInvisibilityOfElementLocated(driver, grnPage.getDotSpinner(), 10);
+		WaitHelper.waitForVisible(driver, grnPage.getGrid(), 10);
+		boolean foundStatus= grnPage.findGRNNofromListingPage();
+		Assert.assertTrue(foundStatus, "Searched GRN No not found in the listing page");
+	}
 }
+
+

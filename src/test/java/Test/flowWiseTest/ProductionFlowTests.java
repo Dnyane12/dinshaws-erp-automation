@@ -49,7 +49,7 @@ public class ProductionFlowTests extends SetUp{
 
     
   //flow to execute work order status flow. dependsOnMethods = "validateWorkOrderFlow"
-    @Test(enabled=false,groups = "Production module-flow",priority=1)
+    @Test(enabled=true,groups = "Production module-flow",priority=2, dependsOnMethods = "validateWorkOrderStatusFlow")
     public void validateProcessTransactionFlow() {
     	try {
     		//procTransFlow.directlyNavigateToProcessTransaction();

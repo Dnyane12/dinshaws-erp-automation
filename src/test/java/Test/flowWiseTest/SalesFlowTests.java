@@ -46,7 +46,7 @@ public class SalesFlowTests extends SetUp{
 		    
 		     //,dependsOnMethods = "createSaleOrder"
 		     //Flow to execute Sale Dispatch Flow.
-		    @Test(groups = "sales-flow",priority=1 )
+		    @Test(enabled=true,groups = "sales-flow",priority=1 )
 		    public void createSaleDispatch() {
 		    	try {
 		    	saleDisFlow.prapareEnvToDirectlyOpenSDForm();

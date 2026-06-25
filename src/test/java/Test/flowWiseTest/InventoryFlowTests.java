@@ -62,7 +62,7 @@ public class InventoryFlowTests extends SetUp{
 		}
 		
 		
-			    @Test(groups = "Inventory-flow" ,priority=0)
+			    @Test(enabled=true,groups ="Inventory-flow" ,priority=0)
 			    public void validatePurchaseOrderCreation() {
 			    	try {
 			    	poFlow.prapareEnv();
@@ -74,7 +74,7 @@ public class InventoryFlowTests extends SetUp{
 			    }
 
 			    
-			    @Test( enabled=true,groups = "Inventory-flow",dependsOnMethods = "validatePurchaseOrderCreation",priority=1)			    
+			    @Test(enabled=true,groups ="Inventory-flow",dependsOnMethods = "validatePurchaseOrderCreation",priority=1)			    
 			    public void validateGRNCreation(){
 			    	grnFlow.prepareEnvToDirectlyOpenGRNForm();
 			    	 grnNo= grnFlow.executeGrnFlow(poNo);

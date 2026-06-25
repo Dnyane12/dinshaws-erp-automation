@@ -109,12 +109,14 @@ public class GoodReceiptNoteFlow {
 			WaitHelper.waitForClickable(driver, grnPage.getFetchDataButton(), 10);
 			grnPage.clickFetchData();
 			logger.info("Clicked Fetch Data button");
+			
+			//String invoiceQty= grnPage.extractPoQtyFromGrid();
 
-			WaitHelper.waitForVisible(driver, grnPage.getGridRow(), 10);
+			WaitHelper.waitForVisibilityOfAllElements(driver, grnPage.getGridRowsOnListingPage(), 20);
 			logger.info("Step 4: Entering GRN Information");
 			grnPage.clickGrnInfoTab();
 
-			WaitHelper.waitForClickable(driver, grnPage.getTransporterMode(), 20);
+			WaitHelper.waitForClickable(driver, grnPage.getTransporterMode(), 10);
 			grnPage.selectTransporterMode(propReader.getProperty("transporterModeLabel"),
 					propReader.getProperty("transporterModeOption"));
 			logger.info("Transporter mode selected: {}", propReader.getProperty("transporterModeOption"));
@@ -189,7 +191,7 @@ public class GoodReceiptNoteFlow {
 			grnPage.selectVendor(data.getVendorDropOption());
 			grnPage.enterPoNoToSearch(data.getPoNoDropOption());
 			grnPage.clickFetchData();
-			WaitHelper.waitForVisible(driver, grnPage.getGridRow(), 10);
+			WaitHelper.waitForVisibilityOfAllElements(driver, grnPage.getGridRowsOnListingPage(), 10);
 			grnPage.clickGrnInfoTab();
     		grnPage.selectTransporterMode(data.getTransporterModeLabel(),data.getTransporterModeOption());
 			grnPage.enterLrNo(data.getLrNo());
@@ -240,7 +242,7 @@ public class GoodReceiptNoteFlow {
 				grnPage.clickFetchData();
 				logger.info("Clicked Fetch Data button");
 
-				WaitHelper.waitForVisible(driver, grnPage.getGridRow(), 10);
+				WaitHelper.waitForVisibilityOfAllElements(driver, grnPage.getGridRowsOnListingPage(), 10);
 				logger.info("Step 4: Entering GRN Information");
 				grnPage.clickGrnInfoTab();
 
@@ -480,7 +482,7 @@ public class GoodReceiptNoteFlow {
 				grnPage.clickFetchData();
 				logger.info("Clicked Fetch Data button");
 
-				WaitHelper.waitForVisible(driver, grnPage.getGridRow(), 10);
+				WaitHelper.waitForVisibilityOfAllElements(driver, grnPage.getGridRowsOnListingPage(), 10);
 				logger.info("Step 4: Entering GRN Information");
 				grnPage.clickGrnInfoTab();
 
@@ -525,7 +527,14 @@ public class GoodReceiptNoteFlow {
 	
 	
 	
-	
+	public void flowToGetAllGRNnoFromListingPage() {
+		grnPage.clickCreateNewButton();
+		logger.info("Clicked Create New button");
+		
+		
+		
+		
+	}
 	
 	
 	

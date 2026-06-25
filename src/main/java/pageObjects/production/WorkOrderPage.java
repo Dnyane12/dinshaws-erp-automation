@@ -6,8 +6,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -35,6 +37,7 @@ private static final Logger logger = LogManager.getLogger(WorkOrderPage.class);
 
     @FindBy(xpath = "//div[@class='igx-snackbar__message' and contains(text(),'Work Order Created successfully')]")
     private WebElement succMsg;
+    
     By dotSpinner = By.xpath("//div[@class='dot-spinner']");
     By transactionMenu =By.xpath("//div[@class='mb-50']//span[@class='fs-13 menu-l1-name'][normalize-space()='Transaction']");
 
@@ -154,6 +157,7 @@ private static final Logger logger = LogManager.getLogger(WorkOrderPage.class);
     //error message field after submission attempt
     @FindBy(xpath = "//div//span[normalize-space(text())='Error Logs' and contains(@class,'custom-font-size')]")
     WebElement errorLogMsgField;
+  
     
     @FindBy(xpath = "//div//igx-icon[normalize-space(text())='keyboard_arrow_down' and contains(@class,'cursor-pointer')]")
     WebElement downArrowIconForErrorLog;
@@ -192,8 +196,9 @@ private static final Logger logger = LogManager.getLogger(WorkOrderPage.class);
         searchTab.click();
     }
 
+    
+    
     // ACTION METHODS — HEADER FIELDS
-
     public void selectDocType(String docType) {
         WaitHelper.waitForClickable(driver, docTypeDropdown, 10);
         docTypeDropdown.click();
@@ -229,6 +234,9 @@ private static final Logger logger = LogManager.getLogger(WorkOrderPage.class);
         workDateClearButton.click();
     }
 
+    
+    
+    
     // ACTION METHODS — DETAIL-ROW FIELDS
 
     public void selectDepartment(String department) {
@@ -268,56 +276,37 @@ private static final Logger logger = LogManager.getLogger(WorkOrderPage.class);
         WaitHelper.selectDropDownOption(driver,bom,20);
     }
 
-    public void enterQuantity(String quantity) {
-//     WaitHelper.waitForClickable(driver, quantityInput, 20);
-//     WaitHelper.waitForRefreshAndClick(driver, quantityInput, 20);
-//     
-//     JavascriptExecutor js = (JavascriptExecutor) driver;
-//     js.executeScript("arguments[0].scrollIntoView(true);", driver.findElement(quantityInput));
-//     driver.findElement(quantityInput).sendKeys(quantity);
-//     WaitHelper.waitForInvisibilityOfElementLocated(driver, dotSpinner, 20);
-     
-     
+    public void extractSuccessMessageAndWorkOrderNo() {
+		WaitHelper.waitForVisible(driver, succMsg, 10);
+		String msg = succMsg.getText();
+		logger.info("Success message after work order creation: " + msg);
+		String[] parts = msg.split("ID:");
+		String workOrderNo= parts[1].trim();
+		logger.info("Extracted Work Order No: " + workOrderNo);		
+	}
     
+    
+    
+    public void enterQuantity(String quantity) {   
     	 WaitHelper.waitForClickable(driver, quantityInput, 20);
     	    WebElement field = driver.findElement(quantityInput);
     	    JavascriptExecutor js = (JavascriptExecutor) driver;
 
     	    // Step 1: Scroll into view and click to focus
     	    js.executeScript("arguments[0].scrollIntoView(true);", field);
-    	    field.click();
-
-    	    // Step 2: Clear the field
-    	    //field.clear();
+    	    field.clear();
     	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 
     	    // Step 3: Type using sendKeys
+    	    //field.sendKeys(quantity,Keys.ENTER);
+    	    
+
     	    field.sendKeys(quantity);
-
+    	    field.sendKeys(Keys.TAB);
+    	    
     	    // Step 4: Wait for UI to react
-    	    WaitHelper.waitForInvisibilityOfElementLocated(driver, dotSpinner, 20);
-    	
-    	
-
-//    	 WaitHelper.waitForClickable(driver, quantityInput, 20);
-//    	    WebElement field = driver.findElement(quantityInput);
-//    	    JavascriptExecutor js = (JavascriptExecutor) driver;
-//
-//    	    // Step 1: Click to focus
-//    	    field.click();
-//
-//    	    // Step 2: Clear + set value + fire all events — single JS line
-//    	    js.executeScript(
-//    	        "arguments[0].focus(); arguments[0].value=arguments[1]; " +
-//    	        "arguments[0].dispatchEvent(new Event('input',{bubbles:true})); " +
-//    	        "arguments[0].dispatchEvent(new Event('change',{bubbles:true})); " +
-//    	        "arguments[0].dispatchEvent(new Event('blur',{bubbles:true}));",
-//    	        field, quantity
-//    	    );
-//
-//    	    // Step 3: Small pause for UI to react and enable submit button
-//    	    try { Thread.sleep(500); } catch (InterruptedException ignored) {}
-       
+    	    //WaitHelper.waitForInvisibilityOfElementLocated(driver, dotSpinner, 20);
+    	      
     }
 
     public String getQuantity() {
@@ -403,9 +392,9 @@ private static final Logger logger = LogManager.getLogger(WorkOrderPage.class);
         WaitHelper.waitForRefreshAndClick(driver, submitButton, 10);
        // WaitHelper.waitForRefreshAndClick(driver, submitButton, 10);
         
-        WaitHelper.waitForVisible(driver, errorLogMsgField, 20);
-        WaitHelper.waitForClickable(driver, errorLogMsgField, 30);
-        downArrowIconForErrorLog.click();
+//        WaitHelper.waitForVisible(driver, errorLogMsgField, 20);
+//        WaitHelper.waitForClickable(driver, errorLogMsgField, 30);
+//        downArrowIconForErrorLog.click();
     }
 
 

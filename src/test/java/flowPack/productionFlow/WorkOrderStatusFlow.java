@@ -27,8 +27,7 @@ private static Logger logger = LogManager.getLogger(WorkOrderStatusFlow.class);
 
 	
 	public void directlyNavigateToWorkOrderStatus() {
-		workOSPage.clickWorkOrderStatusMenu();
-		workOSPage.clickConfOkBtn();		
+		workOSPage.clickWorkOrderStatusMenu();	
 	}
 	
 	

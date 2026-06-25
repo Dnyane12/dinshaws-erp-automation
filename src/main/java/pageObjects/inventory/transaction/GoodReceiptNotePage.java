@@ -1,7 +1,9 @@
 package pageObjects.inventory.transaction;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -150,8 +152,8 @@ public class GoodReceiptNotePage {
 	@FindBy(xpath = "//div[@class='display-cell']//span[normalize-space(text())='Good Receipt Note']")
 	private WebElement grnTitleInGrnForm;
 
-	@FindBy(xpath = "//igx-display-container//igx-grid-row[@role='row']")
-	private WebElement gridRow1;
+	@FindBy(xpath ="//igx-grid-row[@aria-selected='true']")
+	private List<WebElement> gridRowsOnListingPage;
 
 	
 	
@@ -176,6 +178,25 @@ public class GoodReceiptNotePage {
 		System.out.print("successMessage:" + successMessage);
 		return successMessage;
 	}
+	
+	
+//	public List<String> extractPoQtyFromGrid() {
+//		WaitHelper.waitForVisibilityOfAllElements(driver, gridRows, 10);
+//		for (WebElement row : gridRows) {
+//			try {
+//				 List<WebElement> poQtyColumns = row.findElements(By.xpath("//igx-grid-cell[contains(@aria-describedby,'l_inv_grnpo_igx_grid_pod_qty')]"));
+//				  for(WebElement poQty : poQtyColumns) {
+//					  System.out.println("poQty:" + poQty.getText());
+//				  }
+//
+//				  System.out.println("poQty:" + poQty);
+//				return poQty;
+//			} catch (Exception e) {
+//				System.out.println("PO Qty not found in this row");				
+//			}
+//		}
+//		return null;		
+	//}
 
 	public WebElement getRemarkField() {
 		return remarkField;
@@ -240,12 +261,12 @@ public class GoodReceiptNotePage {
 	}
 
 	public void clickGrnInfoTab() {
-		WaitHelper.waitForClickable(driver, grnInfoTab, 20);
+		WaitHelper.waitForClickable(driver, grnInfoTab, 10);
 		WaitHelper.waitForRefreshAndClick(driver, grnInfoTab, 20);
 	}
 
 	public void selectTransporterMode(String transporterModeLabel, String transporterModeOption) {
-		WaitHelper.waitForClickable(driver, transporterMode, 30);
+		WaitHelper.waitForClickable(driver, transporterMode, 20);
 		WaitUtilityDuplicate.selectFromComboWithoutSearch(driver, transporterModeLabel, transporterModeOption);
 		// WaitUtilityDuplicate.selectFromComboWithoutSearch(driver, wait,
 		// transporterModeLabel, transporterModeOption);
@@ -375,14 +396,82 @@ public class GoodReceiptNotePage {
 		return grnFormTitle;
 	}
 
-	public void extractPoQtyFromGrid() {
-		WaitHelper.waitForVisible(driver, gridRow1, 10);
-		String poQty = gridRow1.findElement(By.xpath("//div//span[contains(normalize-space(text()),'PO Qty.:')]"))
-				.getText();
-		System.out.println("poQty:" + poQty);
+	public void extractPoQtyFromGrid1() {
+		WaitHelper.waitForVisibilityOfAllElements(driver, gridRowsOnListingPage, 10);
+		//String poQty = gridRowsOnListingPage.findElements(By.xpath("//div//span[contains(normalize-space(text()),'PO Qty.:')]")).getText();
+		//System.out.println("poQty:" + poQty);
 	}
 
+	public void extractGRNNoFromGrid() {
+	   // WaitHelper.waitForVisibilityOfAllElements(driver, gridRows, 20);
+	    for (WebElement row : gridRowsOnListingPage) {
+	        try {
+	        	 //System.out.println("Row Text : " + row.getText());
+	            String GrnNo = row.findElement(By.xpath(".//igx-grid-cell[@aria-describedby='l_inv_grn_hdr_igx_grid_ingh_doc_no']")).getText();
+	            System.out.println("GrnNo: " + GrnNo);
+	            
+	        } catch (Exception e) {
+	            System.out.println("GrnNo not found in this row");
+	        }
+	    }
+	}
+	
+	
+	public List<String> extractAllGRNNumbers() throws InterruptedException {
+	    Set<String> grnNumbers = new LinkedHashSet<>();
+	    JavascriptExecutor js = (JavascriptExecutor) driver;
+	    WebElement virtualScroller = driver.findElement(By.cssSelector("igx-virtual-helper.igx-vhelper--vertical"));
+	    long previousCount = -1;
+	    
+	    while (true) {
+	        List<WebElement> rows = driver.findElements(By.xpath("//igx-display-container//igx-grid-row[@role='row']"));
+	        for (WebElement row : rows) {
+	            try {
+	                String grnNo = row.findElement(By.xpath(".//igx-grid-cell[@aria-describedby='l_inv_grn_hdr_igx_grid_ingh_doc_no']")).getText().trim();
+	                if (!grnNo.isBlank()) {
+	                    grnNumbers.add(grnNo);
+	                }
+	            } catch (Exception e) {
+	                // Ignore row
+	            }
+	        }
+	        if (grnNumbers.size() == previousCount) {
+	            break;
+	        }
+	        previousCount = grnNumbers.size();
+	        js.executeScript(
+	                "arguments[0].scrollTop += 400;",
+	                virtualScroller);
+	        Thread.sleep(1000);
+	    }
+	    System.out.println("Total GRNs Found : " + grnNumbers.size());
+	    grnNumbers.forEach(System.out::println);
+	    return new ArrayList<>(grnNumbers);
+	}
+	
 		
+	
+	public boolean findGRNNofromListingPage() {
+		String grnNo = "A02-GRN-26-00176";
+		List<WebElement> rows = driver.findElements(By.xpath("//igx-grid-row[@role='row']"));
+		boolean found = false;
+		for(WebElement row : rows){
+		    if(row.getText().contains(grnNo))
+		    {
+		        System.out.println("GRN Found : " + grnNo);
+		        found = true;
+		        break;
+		    }
+		}
+		if(!found)
+		{
+		  System.out.println("GRN Not Found");
+		}
+		return found;
+	}
+	
+	
+	
 	
 	// Method to extract item details from the GRN PO  tab
 	// Method to extract item details from the GRN PO  tab
@@ -668,12 +757,16 @@ public class GoodReceiptNotePage {
 		return succMsg;
 	}
 
-	public WebElement getGridRow() {
-		return gridRow1;
-	}
+//	public List<WebElement> getGridRow() {
+//		return ;
+//	}
 
 	public WebElement getPoDropdownField() {
 		return poDropdownField;
+	}
+
+	public List<WebElement> getGridRowsOnListingPage() {
+		return gridRowsOnListingPage;
 	}
 
 	
