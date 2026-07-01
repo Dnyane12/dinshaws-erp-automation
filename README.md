@@ -11,6 +11,7 @@ The framework automates major Inventory and Sales module flows to validate end-t
 - Maven
 - Page Object Model (POM)
 - GitHub
+- CI/CD
 
 ## Automated Business Flows
 ### Sales Module Automation
@@ -75,4 +76,4 @@ The following inventory workflow has been automated:
 
 ## Author
 Dnyaneshwari Nare
-Automation Test Engineer
+Junior QA Engineer
