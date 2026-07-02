@@ -8,7 +8,7 @@
 	<test name="Sales Flow Only"> 
 	<groups>
 	 <run> 
-	 <include name="sales-flow" /> 
+	 <include name="sales-flow"/> 
 	 </run> 
 	</groups> 
 	<classes> 
