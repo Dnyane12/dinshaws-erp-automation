@@ -11,8 +11,8 @@ pipeline {
         timestamps()
 
         buildDiscarder(logRotator(
-            daysToKeepStr: '7',
-            numToKeepStr: '10'
+            daysToKeepStr: '30',
+            numToKeepStr: '20'
         ))
     }
 
@@ -26,14 +26,19 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-                git branch: 'master',
-                url: 'https://github.com/Dnyane12/dinshaws-erp-automation.git'
+                git (
+				branch:'master',
+                credentialsId:'github-pat-dinshaws'
+                url:'https://github.com/Dnyane12/dinshaws-erp-automation.git'
+                )
             }
         }
 
         stage('Build & Execute Tests') {
             steps {
-                bat 'cd AIIMS_Project && mvn clean test'
+                dir('AIIMS_Project') {
+                    bat 'mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testng-regression.xml'
+               }
             }
         }
 

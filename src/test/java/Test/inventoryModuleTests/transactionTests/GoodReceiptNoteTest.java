@@ -76,7 +76,7 @@ public class GoodReceiptNoteTest extends SetUp {
 	}
 	
 	
-	@Test(description = "Test to validate GRN Flow along with success msg validation.", enabled = false)
+	@Test(enabled = true,description = "Test to validate GRN Flow along with success msg validation.")
 	public void validateGrnFlow() {
 		try {
 			String grnNo = grnFlow.executeGrnFlow(poNo);
@@ -89,7 +89,7 @@ public class GoodReceiptNoteTest extends SetUp {
 	}
 	
 			
-	@Test(dataProvider = "grnTestData", description = "Validate GRN Flow,through data provider and excel with multiple test data sets.", enabled = false)
+	@Test(enabled = false,dataProvider = "grnTestData", description = "Validate GRN Flow,through data provider and excel with multiple test data sets.")
 	public void validateGrnFlow1(GrnTestData data) {
 				
 		String grnNo = grnFlow.executeGrnFlow1(data);
@@ -107,7 +107,7 @@ public class GoodReceiptNoteTest extends SetUp {
 	}
 	
 
-	@Test(description = "Test to validate navigation upto listing page.", enabled = false)
+	@Test(enabled = false,description = "Test to validate navigation upto listing page.")
 	public void validateListingPageHeading() {
 		try {
 			//WaitHelper.waitForVisible(driver, grnPage.getListingPageHeader(), 10);
@@ -124,7 +124,7 @@ public class GoodReceiptNoteTest extends SetUp {
 	}
 
 	
-	@Test(description="Test to validate GRN form loading",enabled = false)
+	@Test(enabled = false,description="Test to validate GRN form loading")
 	public void validateFormLoading() {	
 		grnPage.clickCreateNewButton();
 		logger.info("Clicked Create New button");
@@ -141,7 +141,7 @@ public class GoodReceiptNoteTest extends SetUp {
 	
 
 		
-	@Test(description = "Validate PO data integrity in GRN")
+	@Test(enabled = false,description = "Validate PO data integrity in GRN")
 	public void validatePoDataInGRNInfoTab() {
 		try {
 			// Fetch PO Data
@@ -182,7 +182,7 @@ public class GoodReceiptNoteTest extends SetUp {
 	}
 
 	
-	@Test(description="Test to validate the PO No belong to the selected Vendor or not." ,enabled = false)
+	@Test(enabled = false,description="Test to validate the PO No belong to the selected Vendor or not.")
 	public void validatePoNoAgainstVendor() {
 		grnFlow.flowUptoPoNoSel();
 		String selPoNo= grnPage.extractSelPoNo();
@@ -193,7 +193,7 @@ public class GoodReceiptNoteTest extends SetUp {
 	}
 
 	
-	@Test(description="Test to validate the max limit of the input field.",enabled = false)
+	@Test(enabled = false,description="Test to validate the max limit of the input field.")
 	public void maxLimitForInputFields() {
 		grnFlow.checkMaxLimitOfInputField();
 
@@ -218,7 +218,7 @@ public class GoodReceiptNoteTest extends SetUp {
 
 	
 	
-	@Test(description="Test to validate Landed rate calculations for ITC=\"YES\" and ITC=\"NO\"",enabled = false)
+	@Test(enabled = false,description="Test to validate Landed rate calculations for ITC=\"YES\" and ITC=\"NO\"")
 	public void validateLandedRateCaculations(String poNo) {
 		grnFlow.flowUptoRemark(poNo);
 		
@@ -247,7 +247,7 @@ public class GoodReceiptNoteTest extends SetUp {
 	}
 	
 	
-	@Test(description="Test to validate the consistency of landed rate between UI and Database.",enabled = false)
+	@Test(enabled = false,description="Test to validate the consistency of landed rate between UI and Database.")
 	public void validateLandedRateConsistencyBetUIAndDatabase(String grnNo) {
 		//fetch landed rate from UI
 		//String uiLandedRate=grnPage.extractLandedRateFromUI();
@@ -260,7 +260,7 @@ public class GoodReceiptNoteTest extends SetUp {
 	}
 	
 		
-	@Test(description="Test to validate back button functionality",enabled = false)
+	@Test(enabled = false,description="Test to validate back button functionality")
 	public void validateBackButtonFuct() {	
 		grnPage.clickCreateNewButton();
 		logger.info("Clicked Create New button,Waiting for GRN form to load...");
@@ -288,7 +288,7 @@ public class GoodReceiptNoteTest extends SetUp {
 	}
 
 	
-	@Test(description= "Test to validate Reset button Functionality.",enabled = false)
+	@Test(enabled = false,description= "Test to validate Reset button Functionality.")
 	public void validateResetButtonFunct() {
 		grnFlow.flowToCheckResetFun();
 		softAssert.assertEquals(grnPage.getSelPoNoField().getAttribute("value"), " A02-CP-25-000026");
@@ -312,7 +312,7 @@ public class GoodReceiptNoteTest extends SetUp {
 	}
 
 	
-	@Test(description = "Validate mandatory fields in GRN form")
+	@Test(enabled = false,description = "Validate mandatory fields in GRN form")
 	public void validateMandatoryFields() {
 		//Here at lest one field is empty to check the mandatory validation.
 	    logger.info("Starting mandatory field validation");
@@ -338,7 +338,7 @@ public class GoodReceiptNoteTest extends SetUp {
     }
 	
     
-    @Test(description = "Test to extract PO quantity from listing page grid", enabled =true)
+    @Test(enabled = false,description = "Test to extract PO quantity from listing page grid")
     public void extractGRNNoFromListingPage() throws InterruptedException {
     WaitHelper.waitForInvisibilityOfElementLocated(driver,grnPage.getDotSpinner(), 10);
 	WaitHelper.waitForVisible(driver, grnPage.getGrid(), 10);
@@ -348,7 +348,7 @@ public class GoodReceiptNoteTest extends SetUp {
      }
     
     
-    @Test(description = "Test to search GRN No on listing page", enabled = true)
+    @Test(enabled = false,description = "Test to search GRN No on listing page")
     public void searchGRNNoOnListingPage() throws InterruptedException {
 		WaitHelper.waitForInvisibilityOfElementLocated(driver, grnPage.getDotSpinner(), 10);
 		WaitHelper.waitForVisible(driver, grnPage.getGrid(), 10);
